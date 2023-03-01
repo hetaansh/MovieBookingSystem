@@ -30,8 +30,8 @@ return [
     |
     */
 
-    'use_ico_only' => false,
-    'use_full_favicon' => false,
+    'use_ico_only' => true,
+    'use_full_favicon' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -319,6 +319,18 @@ return [
                 [
                     'text' => 'Operator Users',
                     'url'  => 'admin/operatorUsers',
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Operator Users Menu',
+            'icon'    => 'fas fa-fw fa-list',
+            'can'     => 'isOperator',
+            'submenu' => [
+                [
+                    'text' => 'Operator Users',
+                    'url'  => 'operator/operatorUsers',
                 ],
             ],
         ],

@@ -35,15 +35,19 @@
             @auth('admin')
             <a href="{{ url('/admin/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 " style="margin-right:15px">Admin Dashboard</a>
             @else
-            <a href="{{ route('admin.login') }}" class="text-sm text-gray-700 dark:text-gray-500 " style="margin-right:15px">Admin Log in</a>
+            <a href="{{ route('admin.login-view') }}" class="text-sm text-gray-700 dark:text-gray-500 " style="margin-right:15px">Admin Log in</a>
             @endauth
 
 
             @auth('operator')
             <a href="{{ url('/operator/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 " style="margin-right:15px">Operator Dashboard</a>
             @else
-            <a href="{{ route('operator.login') }}" class="text-sm text-gray-700 dark:text-gray-500 " style="margin-right:15px">Operator Log in</a>
+            <a href="{{ route('operator.login-view') }}" class="text-sm text-gray-700 dark:text-gray-500 " style="margin-right:15px">Operator Log in</a>
             @endauth
+
+
+
+
 
         </div>
 

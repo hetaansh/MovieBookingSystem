@@ -38,6 +38,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('guest:admin')->except('logout');
+        $this->middleware('guest:operator')->except('logout');
     }
 
     public function showAdminLoginForm()
@@ -57,14 +58,14 @@ class LoginController extends Controller
         }
 
         return back()->withInput($request->only('email', 'remember'));
-    }
+    }  
 
     public function showOperatorLoginForm()
     {
         return view('auth.login', ['url' => route('operator.login-view'), 'title'=>'Operator']);
     }
 
-    public function OperatorLogin(Request $request)
+    public function operatorLogin(Request $request)
     {
         $this->validate($request, [
             'email'   => 'required|email',
@@ -77,4 +78,5 @@ class LoginController extends Controller
 
         return back()->withInput($request->only('email', 'remember'));
     }
+
 }

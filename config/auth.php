@@ -48,10 +48,6 @@ return [
             'driver' => 'session',
             'provider' => 'operators',
         ],
-        'operatoUser' => [
-            'driver' => 'session',
-            'provider' => 'operatorUsers',
-        ],
     ],
 
     /*
@@ -81,10 +77,6 @@ return [
             'model' => App\Models\Admin::class,
         ],
         'operators' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Operator::class,
-        ],
-        'operatorUsers' => [
             'driver' => 'eloquent',
             'model' => App\Models\OperatorUser::class,
         ],
@@ -125,12 +117,6 @@ return [
         ],
         'operators' => [
             'provider' => 'operators',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-        'operatorUsers' => [
-            'provider' => 'operatorUsers',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

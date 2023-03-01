@@ -18,10 +18,11 @@ class AdminSeeder extends Seeder
     public function run()
     {
         DB::table('operators')->insert([
-            'name' => 'Operator 2',
-            'email' => 'zetaanshgadhiya@gmail.com',
+            'name' => 'Operator 4',
+            'email' => 'hetaaansh@gmail.com',
             'password' => Hash::make('123456789'),
-            'city' => 'Ahmedabad',
+            'city' => 'Rajkot',
+            'email_verified_at' => Carbon::now(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

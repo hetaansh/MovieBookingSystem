@@ -100,35 +100,29 @@
                 {{ __('adminlte::adminlte.i_forgot_my_password') }}
             </a>
         </p>
-    @endif
-    @if(Request::is('operator'))
-    <p class="my-0">
-            <a href="{{ route('operator.reset') }}">
-                {{ __('adminlte::adminlte.i_forgot_my_password') }}
-            </a>
-        </p>
-    @endif
-    @if(Request::is('login'))
-    <p class="my-0">
+        @endif
+
+        @if(Request::is('login'))
+        <p class="my-0">
             <a href="{{ $password_reset_url }}">
                 {{ __('adminlte::adminlte.i_forgot_my_password') }}
             </a>
         </p>
-    @endif
-    
-        
+        @endif
+
+
 
 
         @if(Request::is('login'))
         {{-- Register link --}}
-            @if($register_url)
-            <p class="my-0">
-                <a href="{{ $register_url }}">
-                    {{ __('adminlte::adminlte.register_a_new_membership') }}
-                </a>
-            </p>
-            @endif
-            @endif
+        @if($register_url)
+        <p class="my-0">
+            <a href="{{ $register_url }}">
+                {{ __('adminlte::adminlte.register_a_new_membership') }}
+            </a>
+        </p>
+        @endif
+        @endif
 
-           
-            @stop
+
+        @stop

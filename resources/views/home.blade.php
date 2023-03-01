@@ -15,6 +15,8 @@
                         <p>Welcome to this beautiful Admin panel.</p>
                     @elsecan('isUser')
                         <p>Welcome to this beautiful user panel.</p>
+                        @elsecan('isOperator')
+                        <p>Welcome to this beautiful operator panel.</p>
                     @endcan
 @stop
 

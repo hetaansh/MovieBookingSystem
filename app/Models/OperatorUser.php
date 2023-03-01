@@ -12,7 +12,7 @@ class OperatorUser extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $guard = "operatorUser";
+    protected $guard = "operator";
 
     /**
      * The attributes that are mass assignable.
@@ -21,10 +21,9 @@ class OperatorUser extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'operator_id',
         'email',
         'password',
-        'city',
-        'operator',
     ];
 
     /**
