@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\OperatorUser;
-use Illuminate\Support\Facades\Hash;
+use App\Models\City;
+use App\Models\State;
 
-class OperatorUserController extends Controller
-{ 
+class CityController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
@@ -15,16 +15,15 @@ class OperatorUserController extends Controller
      */
     public function index()
     {
-        $user = 'Operator Users';
+        $user = 'Cities';
         $heads = [
             'ID',
-            'Operator ID',
+            'State ID',
             'Name',
-            'Email',
             ['label' => 'Actions', 'no-export' => true, 'width' => 10],
         ];
-        $data = OperatorUser::all();
-        return view('super_admin.operator_users.index', compact('data','heads','user'));
+        $data = City::all();
+        return view('super_admin.cities.index', compact('data','heads','user'));
     }
 
     /**
@@ -34,7 +33,8 @@ class OperatorUserController extends Controller
      */
     public function create()
     {
-        return view('super_admin.operator_users.create');
+        $data = State::all();
+        return view('super_admin.cities.create',compact('data'));
     }
 
     /**
@@ -47,18 +47,15 @@ class OperatorUserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'operator_id' => 'required',
-            'email' => 'required',
-            'password' => 'required|confirmed|min:9',
+            'state_id' => 'required',
         ]);
-        $validated['password'] = Hash::make($validated['password']);
 
-        OperatorUser::create($validated);
+        City::create($validated);
 
-        return redirect() -> route('operatorUsers.index');
+        return redirect() -> route('cities.index');
     }
 
-        /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -66,17 +63,12 @@ class OperatorUserController extends Controller
      */
     public function show($id)
     {
-        $req = OperatorUser::find($id);
-
-        $user = auth()->user()->name;
-        if($req -> name === $user){
-            return redirect() -> route('operatorUsers.index');
-        };
-
+        $req = City::find($id);
         $req->delete();
 
-        return redirect()->route('operatorUsers.index');
+        return redirect()->route('cities.index');
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -85,13 +77,10 @@ class OperatorUserController extends Controller
      */
     public function edit($id)
     {
-        $data = OperatorUser::find($id);
-        $user = auth()->user()->name;
-        if($data -> name === $user){
-            return redirect() -> route('operatorUsers.index');
-        };
+        $data = City::find($id);
+        $states = State::all();
 
-        return view('super_admin.operator_users.edit', compact('data'));
+        return view('super_admin.cities.edit', compact('data','states'));
     }
 
     /**
@@ -101,23 +90,14 @@ class OperatorUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-        $data = OperatorUser::find($id);
-        
-        
-        
-       
-
+        $data = City::find($id);
         $data->name = $request->name;
-        $data->operator_id = $request->operator_id;
-        $data->email = $request->email;
-        $data->password = $request->password;
-        $data->password = Hash::make($data->password);
-
+        $data->state_id = $request->state_id;
         $data->save();
 
-        return redirect()->route('operatorUsers.index');
+        return redirect()->route('cities.index');
     }
 
     /**
@@ -128,6 +108,6 @@ class OperatorUserController extends Controller
      */
     public function destroy($id)
     {
-       
+        //
     }
 }

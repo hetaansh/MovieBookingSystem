@@ -30,10 +30,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+
                         <div style="padding-bottom:20px;float:right">
                             <a class="btn btn-sm btn-secondary mx-2 " href="{{ route('operatorUsers.create') }}">Add Operator User</a>
                         </div>
-
 
                         <x-adminlte-datatable id="table1" :heads="$heads" hoverable with-footer head-theme="light" footer-theme="light" beautify>
 

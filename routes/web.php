@@ -6,7 +6,9 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\OperatorUserController;
 use App\Http\Controllers\OperatorController;
-
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CinemaController;
+use App\Http\Controllers\ScreenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +76,10 @@ Route::resource('admin/operators', OperatorController::class)->middleware('auth:
 
 Route::resource('admin/operatorUsers', OperatorUserController::class)->middleware('auth:admin');
 
+Route::resource('admin/cities', CityController::class)->middleware('auth:admin');
+
 Route::resource('operator/operatorUsers', OperatorUserController::class)->middleware('auth:operator');
 
+Route::resource('operator/cinemas', CinemaController::class)->middleware('auth:operator');
 
+Route::resource('operator/screens', ScreenController::class)->middleware('auth:operator');

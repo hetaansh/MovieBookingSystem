@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\OperatorUser;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Cinema;
 
-class OperatorUserController extends Controller
-{ 
+class CinemaController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
@@ -15,16 +14,18 @@ class OperatorUserController extends Controller
      */
     public function index()
     {
-        $user = 'Operator Users';
+        $user = 'Cinema';
         $heads = [
             'ID',
             'Operator ID',
+            'City ID',
             'Name',
-            'Email',
+            'Address',
+            'Pincode',
             ['label' => 'Actions', 'no-export' => true, 'width' => 10],
         ];
-        $data = OperatorUser::all();
-        return view('super_admin.operator_users.index', compact('data','heads','user'));
+        $data = Cinema::all();
+        return view('operator.cinema.index', compact('data','heads','user'));
     }
 
     /**
@@ -34,7 +35,7 @@ class OperatorUserController extends Controller
      */
     public function create()
     {
-        return view('super_admin.operator_users.create');
+        return view('operator.cinema.create');
     }
 
     /**
@@ -48,17 +49,17 @@ class OperatorUserController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'operator_id' => 'required',
-            'email' => 'required',
-            'password' => 'required|confirmed|min:9',
+            'city_id' => 'required',
+            'address' => 'required',
+            'pincode' => 'required|max:9',
         ]);
-        $validated['password'] = Hash::make($validated['password']);
 
-        OperatorUser::create($validated);
+        Cinema::create($validated);
 
-        return redirect() -> route('operatorUsers.index');
+        return redirect() -> route('cinemas.index');
     }
 
-        /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -66,17 +67,12 @@ class OperatorUserController extends Controller
      */
     public function show($id)
     {
-        $req = OperatorUser::find($id);
-
-        $user = auth()->user()->name;
-        if($req -> name === $user){
-            return redirect() -> route('operatorUsers.index');
-        };
-
+        $req = Cinema::find($id);
         $req->delete();
 
-        return redirect()->route('operatorUsers.index');
+        return redirect()->route('cinemas.index');
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -85,13 +81,9 @@ class OperatorUserController extends Controller
      */
     public function edit($id)
     {
-        $data = OperatorUser::find($id);
-        $user = auth()->user()->name;
-        if($data -> name === $user){
-            return redirect() -> route('operatorUsers.index');
-        };
+        $data = Cinema::find($id);
 
-        return view('super_admin.operator_users.edit', compact('data'));
+        return view('operator.cinema.edit', compact('data'));
     }
 
     /**
@@ -101,23 +93,17 @@ class OperatorUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-        $data = OperatorUser::find($id);
-        
-        
-        
-       
-
+        $data = Cinema::find($id);
         $data->name = $request->name;
         $data->operator_id = $request->operator_id;
-        $data->email = $request->email;
-        $data->password = $request->password;
-        $data->password = Hash::make($data->password);
-
+        $data->city_id = $request->city_id;
+        $data->address = $request->address;
+        $data->pincode = $request->pincode;
         $data->save();
 
-        return redirect()->route('operatorUsers.index');
+        return redirect()->route('cinemas.index');
     }
 
     /**
@@ -128,6 +114,6 @@ class OperatorUserController extends Controller
      */
     public function destroy($id)
     {
-       
+        //
     }
 }

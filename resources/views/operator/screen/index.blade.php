@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Operators')
+@section('title', 'Screen')
 
 @section('content')
 
@@ -30,21 +30,20 @@
                 <div class="card">
                     <div class="card-body">
                         <div style="padding-bottom:20px;float:right">
-                            <a class="btn btn-sm btn-secondary mx-2 " href="{{ route('operators.create') }}">Add Operator</a>
+                            <a class="btn btn-sm btn-secondary mx-2 " href="{{ route('screens.create') }}">Add Screen</a>
                         </div>
 
 
                         <x-adminlte-datatable id="table1" :heads="$heads" hoverable with-footer head-theme="light" footer-theme="light" beautify>
 
-                            @foreach($data as $operators)
+                            @foreach($data as $screens)
                             <tr>
-                                <td>{{$operators->id}}</td>
-                                <td>{{$operators->name}}</td>
-                                <td>{{$operators->city_id}}</td>
+                                <td>{{$screens->id}}</td>
+                                <td>{{$screens->cinema_id}}</td>
                                 <td>
-                                    <a class="btn btn-xs btn-default text-primary mx-1 shadow" onclick="return confirm('Are you sure you want to delete this data?')" href="{{url('/admin/operators/'.$operators->id)}}"><i class="fa fa-lg fa-fw fa-trash"></i></a>
+                                    <a class="btn btn-xs btn-default text-primary mx-1 shadow" onclick="return confirm('Are you sure you want to delete this data?')" href="{{url('/operator/screens/'.$screens->id)}}"><i class="fa fa-lg fa-fw fa-trash"></i></a>
 
-                                    <a class="btn btn-xs btn-default text-primary mx-1 shadow" onclick="return confirm('Are you sure you want to update this data?')" href="{{url('/admin/operators/'.$operators->id.'/edit')}}"><i class="fa fa-lg fa-fw fa-pen"></i></a>
+                                    <a class="btn btn-xs btn-default text-primary mx-1 shadow" onclick="return confirm('Are you sure you want to update this data?')" href="{{url('/operator/screens/'.$screens->id.'/edit')}}"><i class="fa fa-lg fa-fw fa-pen"></i></a>
                                 </td>
                             </tr>
                             @endforeach

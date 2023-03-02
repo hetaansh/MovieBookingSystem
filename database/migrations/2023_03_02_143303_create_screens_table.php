@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('operators', function (Blueprint $table) {
+        Schema::create('screens', function (Blueprint $table) {
             $table->id();
-            $table->integer('city_id');
-            $table->string('name');
-            $table->rememberToken();
+            $table->integer('cinema_id');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('operators');
+        Schema::dropIfExists('screens');
     }
 };

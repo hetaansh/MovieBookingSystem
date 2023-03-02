@@ -322,7 +322,6 @@ return [
                 ],
             ],
         ],
-
         [
             'text'    => 'Operator Users Menu',
             'icon'    => 'fas fa-fw fa-list',
@@ -333,6 +332,24 @@ return [
                     'url'  => 'operator/operatorUsers',
                 ],
             ],
+        ],
+        [
+            'text'    => 'Cities',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isAdmin',
+            'url'  => 'admin/cities',
+        ],
+        [
+            'text'    => 'Cinemas',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isOperator',
+            'url'  => 'operator/cinemas',
+        ],
+        [
+            'text'    => 'Screens',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isOperator',
+            'url'  => 'operator/screens',
         ],
 
         ['header' => 'account_settings'],

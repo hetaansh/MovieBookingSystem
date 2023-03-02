@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Screen;
 use Illuminate\Http\Request;
-use App\Models\Operator;
 
-class OperatorController extends Controller
+class ScreenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,17 +13,15 @@ class OperatorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-       
-        $user = 'Operators';
+    {
+        $user = 'Screen';
         $heads = [
             'ID',
-            'Name',
-            'City ID',
+            'Cinema ID',
             ['label' => 'Actions', 'no-export' => true, 'width' => 10],
         ];
-        $data = Operator::all();
-        return view('super_admin.operators.index', compact('data','heads','user'));
+        $data = Screen::all();
+        return view('operator.screen.index', compact('data','heads','user'));
     }
 
     /**
@@ -33,7 +31,7 @@ class OperatorController extends Controller
      */
     public function create()
     {
-        return view('super_admin.operators.create');
+        return view('operator.screen.create');
     }
 
     /**
@@ -46,15 +44,16 @@ class OperatorController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'city_id' => 'required',
+            'cinema_id' => 'required',
+
         ]);
 
-        Operator::create($validated);
+        Screen::create($validated);
 
-        return redirect() -> route('operators.index');
+        return redirect() -> route('screens.index');
     }
 
-        /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -62,11 +61,12 @@ class OperatorController extends Controller
      */
     public function show($id)
     {
-        $req = Operator::find($id);
+        $req = Screen::find($id);
         $req->delete();
 
-        return redirect()->route('operators.index');
+        return redirect()->route('screens.index');
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -75,9 +75,9 @@ class OperatorController extends Controller
      */
     public function edit($id)
     {
-        $data = Operator::find($id);
+        $data = Screen::find($id);
 
-        return view('super_admin.operators.edit', compact('data'));
+        return view('operator.screen.edit', compact('data'));
     }
 
     /**
@@ -87,14 +87,13 @@ class OperatorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-        $data = Operator::find($id);
-        $data->name = $request->name;
-        $data->city_id = $request->city_id;
+        $data = Screen::find($id);
+        $data->cinema_id = $request->cinema_id;
         $data->save();
 
-        return redirect()->route('operators.index');
+        return redirect()->route('screens.index');
     }
 
     /**
@@ -105,6 +104,6 @@ class OperatorController extends Controller
      */
     public function destroy($id)
     {
-       
+        //
     }
 }
