@@ -70,30 +70,10 @@ Route::post('/operator/confirm', [ConfirmPasswordController::class, 'operatorSto
 
 
 
-
-
-Route::get('/operator/operatorUsers', [OperatorUsersController::class, 'show'])
-->name('operator.operatorUsers')->middleware('auth:operator'); 
-
-Route::get('/operator/operatorUsers/add',[OperatorUsersController::class,'showAddOperatorUsersPage'])
-->name('operator.operatorUsers.show')->middleware('auth:operator'); 
-
-Route::post('/operator/operatorUsers/add',[OperatorUsersController::class,'AddOperatorUsers'])
-->name('operator.operatorUsers.add')->middleware('auth:operator'); 
-
-Route::get('/operator/operatorUsers/update/{id}',[OperatorUsersController::class,'showEditOperatorUsersPage'])
-->name('operator.operatorUsers.edit.show')->middleware('auth:operator'); 
-
-Route::post('/operator/operatorUsers/update/',[OperatorUsersController::class,'EditOperatorUsers'])
-->name('operator.operatorUsers.edit')->middleware('auth:operator'); 
-
-Route::get('/operator/operatorUsers/delete/{id}',[OperatorUsersController::class,'deleteOperatorUsers'])
-->name('operator.operatorUsers.delete')->middleware('auth:operator'); 
-
-
 Route::resource('admin/operators', OperatorController::class)->middleware('auth:admin');
 
 Route::resource('admin/operatorUsers', OperatorUserController::class)->middleware('auth:admin');
 
+Route::resource('operator/operatorUsers', OperatorUserController::class)->middleware('auth:operator');
 
 

@@ -67,6 +67,12 @@ class OperatorUserController extends Controller
     public function show($id)
     {
         $req = OperatorUser::find($id);
+
+        $user = auth()->user()->name;
+        if($req -> name === $user){
+            return redirect() -> route('operatorUsers.index');
+        };
+
         $req->delete();
 
         return redirect()->route('operatorUsers.index');
@@ -80,6 +86,10 @@ class OperatorUserController extends Controller
     public function edit($id)
     {
         $data = OperatorUser::find($id);
+        $user = auth()->user()->name;
+        if($data -> name === $user){
+            return redirect() -> route('operatorUsers.index');
+        };
 
         return view('super_admin.operator_users.edit', compact('data'));
     }
@@ -94,11 +104,18 @@ class OperatorUserController extends Controller
     public function update($id, Request $request)
     {
         $data = OperatorUser::find($id);
+        
+        $user = auth()->user()->name;
+        if($data -> name === $user){
+            return redirect() -> route('operatorUsers.index');
+        };
+
         $data->name = $request->name;
         $data->operator_id = $request->operator_id;
         $data->email = $request->email;
         $data->password = $request->password;
         $data->password = Hash::make($data->password);
+
         $data->save();
 
         return redirect()->route('operatorUsers.index');

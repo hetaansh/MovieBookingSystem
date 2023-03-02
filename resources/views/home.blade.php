@@ -8,6 +8,7 @@
     <h1>Dashboard</h1>
 @stop
 
+
 @section('content')
 
 
