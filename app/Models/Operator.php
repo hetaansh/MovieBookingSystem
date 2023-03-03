@@ -2,27 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Operator extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-    public function City(): BelongsTo
-    {
-        return $this->belongsTo(City::class, 'city_id', 'id');
-    }
-
-    public function operator_users(): HasMany
-    {
-        return $this->hasMany(OperatorUser::class);
-    }
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -33,21 +20,13 @@ class Operator extends Model
         'name',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
+    }
 
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-
-    ];
+    public function operator_users(): HasMany
+    {
+        return $this->hasMany(OperatorUser::class);
+    }
 }

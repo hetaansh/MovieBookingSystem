@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('operator_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('operator_id');
+            $table->unsignedInteger('operator_id');
+            $table->foreign('operator_id')->references('id')->on('operators');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->timestamps();
-            $table->foreign('operator_id')->references('id')->on('operators');
         });
     }
 
