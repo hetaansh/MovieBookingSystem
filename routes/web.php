@@ -78,8 +78,8 @@ Route::resource('admin/operatorUsers', OperatorUserController::class)->middlewar
 
 Route::resource('admin/cities', CityController::class)->middleware('auth:admin');
 
-Route::resource('operator/operatorUsers', OperatorUserController::class)->middleware('auth:operator');
+// Route::resource('operator/operatorUsers', OperatorUserController::class)->middleware('auth:operator');
 
-Route::resource('operator/cinemas', CinemaController::class)->middleware('auth:operator');
+// Route::resource('operator/cinemas', CinemaController::class)->middleware('auth:operator');
 
-Route::resource('operator/screens', ScreenController::class)->middleware('auth:operator');
+// Route::resource('operator/screens', ScreenController::class)->middleware('auth:operator');

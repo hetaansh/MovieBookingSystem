@@ -7,12 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OperatorUser extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function operator(): BelongsTo
+{
+    return $this->belongsTo(Operator::class, 'operator_id', 'id');
+}
+
     protected $guard = "operator";
+
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +28,6 @@ class OperatorUser extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'operator_id',
         'email',
         'password',
     ];

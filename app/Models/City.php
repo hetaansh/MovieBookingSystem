@@ -4,15 +4,25 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class City extends Authenticatable
+class City extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    
+    public function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class, 'state_id', 'id');
+    }
+
+    public function operators(): HasMany
+    {
+        return $this->hasMany(Operator::class);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -20,8 +30,7 @@ class City extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'state_id', 
-        'name', 
+        'name',
     ];
 
     /**
@@ -39,6 +48,6 @@ class City extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+
     ];
 }

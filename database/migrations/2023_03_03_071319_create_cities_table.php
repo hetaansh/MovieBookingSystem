@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('screens', function (Blueprint $table) {
+        Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->integer('cinema_id');
+            $table->unsignedBigInteger('state_id');
+            $table->string('name');
             $table->timestamps();
+            $table->foreign('state_id')->references('id')->on('states');
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('screens');
+        Schema::dropIfExists('cities');
     }
 };

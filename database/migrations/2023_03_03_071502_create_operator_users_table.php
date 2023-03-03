@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cinemas', function (Blueprint $table) {
+        Schema::create('operator_users', function (Blueprint $table) {
             $table->id();
-            $table->integer('operator_id');
-            $table->integer('city_id');
+            $table->unsignedBigInteger('operator_id');
             $table->string('name');
-            $table->string('address');
-            $table->string('pincode');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
             $table->timestamps();
+            $table->foreign('operator_id')->references('id')->on('operators');
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cinemas');
+        Schema::dropIfExists('operator_users');
     }
 };
