@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add Cities')
+@section('title', 'Add City')
 
 
 

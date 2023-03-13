@@ -11,10 +11,10 @@
     <div class="form-group row">
         <label for="state_id" class="col-sm-2 col-form-label">Operator</label>
         <div class="col-sm-10">
-            <x-adminlte-select2 name="operator_id" id="operator_id">
+                <x-adminlte-select2 name="operator_id" id="operator_id">
                 <option value=""> -- Select One --</option>
                 @foreach ($operators as $operator)
-                <option value="{{$operator->id}}" {{ (old('operator_id') == $operator->id || isset($operator_user) && $operator_user->operator_id == $operator->id) ? "selected" : "" }}>{{ $operator->name }}</option>
+                <option value="{{$operator->id}}" {{ isset($operator_user) ? 'disabled' : "" }} {{ (old('operator_id') == $operator->id || isset($operator_user) && $operator_user->operator_id == $operator->id) ? "selected" : "" }}>{{ $operator->name }}</option>
                 @endforeach
             </x-adminlte-select2>
         </div>
@@ -40,7 +40,7 @@
     <div class="form-group row">
         <label for="password" class="col-sm-2 col-form-label">Confirm Password</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"" id=" confirm_password" name="confirm_password" placeholder="Enter Confirm Password"  autocomplete="current-password"> 
+            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"" id=" password_confirmation" name="password_confirmation" placeholder="Enter Confirm Password"  autocomplete="current-password"> 
         </div>
     </div>
 

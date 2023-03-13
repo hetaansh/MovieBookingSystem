@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add Operators')
+@section('title', 'Add Operator')
 
 
 

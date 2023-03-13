@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Update Operator Users')
+@section('title', 'Update Operator User')
 
 
 
@@ -15,7 +15,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('cities.create') }}">Edit</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('admin/operatorUsers/' . $operator_user->id . '/edit') }}">Edit</a></li>
                     <li class="breadcrumb-item active"><a style="color:#6c757d" href="{{ route('operatorUsers.index') }}">Home</a></li>
                     <li class="breadcrumb-item active">{{ $user }}</li>
                 </ol>

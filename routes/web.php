@@ -8,7 +8,9 @@ use App\Http\Controllers\OperatorUserController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CinemaController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScreenController;
+use App\Http\Controllers\StateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +81,11 @@ Route::resource('admin/operatorUsers', OperatorUserController::class)->middlewar
 
 Route::get('admin/cities/datatable', [CityController::class, 'datatable'])->middleware('auth:admin')->name('cities.datatable');
 Route::resource('admin/cities', CityController::class)->middleware('auth:admin');
+
+Route::get('admin/states/datatable', [StateController::class, 'datatable'])->middleware('auth:admin')->name('states.datatable');
+Route::resource('admin/states', StateController::class)->middleware('auth:admin');
+
+Route::resource('admin/profiles', ProfileController::class)->middleware('auth:admin');
 
 // Route::resource('operator/operatorUsers', OperatorUserController::class)->middleware('auth:operator');
 

@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
-use App\Models\City;
-use App\Models\State;
 use Exception;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\State;
+use Illuminate\Http\Request;
 
-class CityController extends Controller
+class StateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,13 +16,13 @@ class CityController extends Controller
      */
     public function index()
     {
-        $user = 'Cities';
-        return view('super_admin.cities.index', compact('user'));
+        $user = 'States';
+        return view('super_admin.states.index',compact('user'));
     }
 
     public function dataTable()
     {
-        return Datatables::of(City::with('state'))->make(true);
+        return Datatables::of(State::all())->make(true);
     }
 
     /**
@@ -33,10 +31,9 @@ class CityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        $user = 'Cities';
-        $states = State::all();
-        return view('super_admin.cities.create',compact('states','user'));
+    {
+        $user = 'States';
+        return view('super_admin.states.create',compact('user'));
     }
 
     /**
@@ -49,16 +46,12 @@ class CityController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|max:85',
-            'state_id' => 'required',
         ],
-        [
-            'state_id' => 'State must be selected.'
-        ]
     );
         
-        City::create($validated);
+        State::create($validated);
 
-        return redirect() -> route('cities.index')->with('message','Data added Successfully');
+        return redirect() -> route('states.index')->with('message','Data added Successfully');
     }
 
     /**
@@ -69,7 +62,7 @@ class CityController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -80,11 +73,10 @@ class CityController extends Controller
      */
     public function edit($id)
     {
-        $city = City::find($id);
-        $states = State::all();
-        $user = 'City';
+        $state = State::find($id);
+        $user = 'State';
 
-        return view('super_admin.cities.edit', compact('city','states','user'));
+        return view('super_admin.states.edit', compact('state','user'));
     }
 
     /**
@@ -95,16 +87,15 @@ class CityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $request->validate([
             'name' => 'required|max:85',
-            'state_id' => '',
         ]);
         
-        $city = City::find($id);
-        $city->fill($request->all())->save();
+        $state = State::find($id);
+        $state->fill($request->all())->save();
 
-        return redirect()->route('cities.index')->with('message','Data updated Successfully');
+        return redirect()->route('states.index')->with('message','Data updated Successfully');
     }
 
     /**
@@ -116,8 +107,8 @@ class CityController extends Controller
     public function destroy($id)
     {
         try {
-            City::find($id)->delete();
-            return 'City has been deleted!';
+            State::find($id)->delete();
+            return 'State has been deleted!';
         } catch (Exception $e) {
             return response('Contact Support!', 400);
         }

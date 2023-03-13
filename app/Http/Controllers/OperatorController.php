@@ -55,9 +55,13 @@ class OperatorController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:50',
             'city_id' => 'required',
-        ]);
+        ],
+        [
+            'city_id.required' => 'City must be selected.',
+        ]
+    );
 
         Operator::create($validated);
 
@@ -98,8 +102,8 @@ class OperatorController extends Controller
     public function update($id, Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'city_id' => 'required',
+            'name' => 'required|max:50',
+            'city_id' => '',
         ]);
 
         $operator = Operator::find($id);

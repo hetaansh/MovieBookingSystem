@@ -292,11 +292,11 @@ return [
     
     'menu' => [
         // Navbar items:
-        [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
-            'topnav_right' => true,
-        ],
+        // [
+        //     'type'         => 'navbar-search',
+        //     'text'         => 'search',
+        //     'topnav_right' => true,
+        // ],
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
@@ -327,6 +327,20 @@ return [
             ],
         ],
         [
+            'text'    => 'Cities',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isAdmin',
+            'url'  => 'admin/cities',
+            'active' => ['admin/cities*']
+        ],
+        [
+            'text'    => 'States',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isAdmin',
+            'url'  => 'admin/states',
+            'active' => ['admin/states*']
+        ],
+        [
             'text'    => 'Operator Users Menu',
             'icon'    => 'fas fa-fw fa-list',
             'can'     => 'isOperator',
@@ -336,12 +350,6 @@ return [
                     'url'  => 'operator/operatorUsers',
                 ],
             ],
-        ],
-        [
-            'text'    => 'Cities',
-            'icon'    => 'fa fa-map-marker',
-            'can'     => 'isAdmin',
-            'url'  => 'admin/cities',
         ],
         [
             'text'    => 'Cinemas',
@@ -358,30 +366,9 @@ return [
 
         ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
         ],
     ],
 

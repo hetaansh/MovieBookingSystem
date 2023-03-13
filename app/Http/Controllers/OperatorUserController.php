@@ -56,11 +56,15 @@ class OperatorUserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:50',
             'operator_id' => 'required',
             'email' => 'required',
-            'password' => 'required|confirmed|min:9',
-        ]);
+            'password' => 'required|min:8|confirmed',
+        ],
+        [
+            'operator_id.required' => 'Operator must be selected.',
+        ]
+    );
         $validated['password'] = Hash::make($validated['password']);
 
         OperatorUser::create($validated);
@@ -106,13 +110,15 @@ class OperatorUserController extends Controller
      */
     public function update($id, Request $request)
     {   
+
         $request->validate([
-            'name' => 'required',
-            'operator_id' => 'required',
+            'name' => 'required|max:50',
+            'operator_id' => '',
             'email' => 'required',
-            'password' => 'required|min:8',
+            'password' => 'required|min:8|confirmed',
 
         ]);
+
         
         $operator_user = OperatorUser::find($id);
         $operator_user->password = Hash::make($operator_user->password);

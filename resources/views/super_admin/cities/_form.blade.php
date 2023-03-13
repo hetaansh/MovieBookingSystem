@@ -11,10 +11,10 @@
     <div class="form-group row">
         <label for="state_id" class="col-sm-2 col-form-label">State</label>
         <div class="col-sm-10">
-            <x-adminlte-select2 name="state_id" id="state_id">
+            <x-adminlte-select2 name="state_id" id="state_id" >
                 <option value=""> -- Select One --</option>
                 @foreach ($states as $state)
-                <option value="{{$state->id}}" {{ (old('state_id') == $state->id || isset($city) && $city->state_id == $state->id) ? "selected" : "" }}>{{ $state->name }}</option>
+                <option value="{{$state->id}}" {{ isset($city) ? 'disabled' : "" }} {{ (old('state_id') == $state->id || isset($city) && $city->state_id == $state->id) ? "selected" : "" }} >{{ $state->name }}</option>
                 @endforeach
             </x-adminlte-select2>
         </div>

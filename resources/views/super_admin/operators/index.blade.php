@@ -14,12 +14,6 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <style>
-        th {
-            text-align: center;
-        }
-    </style>
-
 </head>
 
 
@@ -77,6 +71,10 @@
                         </div>
 
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 
 <script type="text/javascript">
@@ -177,7 +175,7 @@
 
 <link href="{{ asset('/datatable/css/jquery.dataTables.min.css') }}" rel="stylesheet">
 
-<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+
 
 
 @stop

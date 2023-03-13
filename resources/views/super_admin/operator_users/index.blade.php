@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Operators')
+@section('title', 'Operator Users')
 
 @section('content')
 
@@ -13,12 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <style>
-        th {
-            text-align: center;
-        }
-    </style>
 
 </head>
 
@@ -79,6 +73,10 @@
                         </div>
 
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 
 <script type="text/javascript">

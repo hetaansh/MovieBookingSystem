@@ -14,7 +14,7 @@
             <x-adminlte-select2 name="city_id" id="city_id">
                 <option value=""> -- Select One --</option>
                 @foreach ($cities as $city)
-                <option value="{{$city->id}}"  {{ (old('city_id') == $city->id || isset($operator) && $operator->city_id == $city->id) ? "selected" : "" }}>{{ $city->name }}</option>
+                <option value="{{$city->id}}" {{ isset($operator) ? 'disabled' : "" }}  {{ (old('city_id') == $city->id || isset($operator) && $operator->city_id == $city->id) ? "selected" : "" }}>{{ $city->name }}</option>
                 @endforeach
             </x-adminlte-select2>
         </div>
