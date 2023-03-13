@@ -315,10 +315,14 @@ return [
                 [
                     'text' => 'Operators',
                     'url'  => 'admin/operators',
+                    'icon' => 'fas fa-fw fa-user',
+                    'active' => ['admin/operators*']
                 ],
                 [
                     'text' => 'Operator Users',
                     'url'  => 'admin/operatorUsers',
+                    'icon' => 'fas fa-fw fa-users',
+                    'active' => ['admin/operatorUsers*']
                 ],
             ],
         ],
@@ -482,17 +486,22 @@ return [
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css',
                 ],
             ],
         ],

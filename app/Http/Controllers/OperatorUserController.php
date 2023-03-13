@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Operator;
 use Illuminate\Http\Request;
 use App\Models\OperatorUser;
 use Illuminate\Support\Facades\Hash;
+use Exception;
+use Yajra\DataTables\Facades\DataTables;
 
 class OperatorUserController extends Controller
 { 
@@ -18,13 +21,18 @@ class OperatorUserController extends Controller
         $user = 'Operator Users';
         $heads = [
             'ID',
-            'Operator ID',
+            'Operator',
             'Name',
             'Email',
             ['label' => 'Actions', 'no-export' => true, 'width' => 10],
         ];
-        $data = OperatorUser::all();
-        return view('super_admin.operator_users.index', compact('data','heads','user'));
+       
+        return view('super_admin.operator_users.index', compact('heads','user'));
+    }
+
+    public function dataTable()
+    {
+        return Datatables::of(OperatorUser::with('operator'))->make(true);
     }
 
     /**
@@ -33,8 +41,10 @@ class OperatorUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('super_admin.operator_users.create');
+    {   
+        $user = 'Operator Users';
+        $operators = Operator::all();
+        return view('super_admin.operator_users.create',compact('operators','user'));
     }
 
     /**
@@ -55,7 +65,7 @@ class OperatorUserController extends Controller
 
         OperatorUser::create($validated);
 
-        return redirect() -> route('operatorUsers.index');
+        return redirect() -> route('operatorUsers.index')->with('message','Data added Successfully');
     }
 
         /**
@@ -66,16 +76,7 @@ class OperatorUserController extends Controller
      */
     public function show($id)
     {
-        $req = OperatorUser::find($id);
 
-        $user = auth()->user()->name;
-        if($req -> name === $user){
-            return redirect() -> route('operatorUsers.index');
-        };
-
-        $req->delete();
-
-        return redirect()->route('operatorUsers.index');
     }
     /**
      * Show the form for editing the specified resource.
@@ -85,13 +86,15 @@ class OperatorUserController extends Controller
      */
     public function edit($id)
     {
-        $data = OperatorUser::find($id);
-        $user = auth()->user()->name;
-        if($data -> name === $user){
-            return redirect() -> route('operatorUsers.index');
-        };
+        $operator_user = OperatorUser::find($id);
+        $operators = Operator::all();
+        $user = 'Operator Users';
+        // $user = auth()->user()->name;
+        // if($operator_users -> name === $user){
+        //     return redirect() -> route('operatorUsers.index');
+        // };
 
-        return view('super_admin.operator_users.edit', compact('data'));
+        return view('super_admin.operator_users.edit', compact('operator_user','operators','user'));
     }
 
     /**
@@ -102,22 +105,23 @@ class OperatorUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request)
-    {
-        $data = OperatorUser::find($id);
-        
-        
-        
-       
+    {   
+        $request->validate([
+            'name' => 'required',
+            'operator_id' => 'required',
+            'email' => 'required',
+            'password' => 'required|min:8',
 
-        $data->name = $request->name;
-        $data->operator_id = $request->operator_id;
-        $data->email = $request->email;
-        $data->password = $request->password;
-        $data->password = Hash::make($data->password);
+        ]);
+        
+        $operator_user = OperatorUser::find($id);
+        $operator_user->password = Hash::make($operator_user->password);
+        $operator_user->fill($request->all())->save();
 
-        $data->save();
+        
 
-        return redirect()->route('operatorUsers.index');
+
+        return redirect()->route('operatorUsers.index')->with('message','Data updated Successfully');
     }
 
     /**
@@ -128,6 +132,11 @@ class OperatorUserController extends Controller
      */
     public function destroy($id)
     {
-       
+        try {
+            OperatorUser::find($id)->delete();
+            return 'Operator User has been deleted!';
+        } catch (Exception $e) {
+            return response('Contact Support!', 400);
+        }
     }
 }

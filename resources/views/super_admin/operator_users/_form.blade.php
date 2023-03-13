@@ -1,113 +1,47 @@
-@if(Request::is('*/create'))
-<form action="{{ route('operatorUsers.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <div class="card-body">
-    <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required>
+<div class="card-body">
+    <div class="form-group row">
+    <label for="name" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input type="name" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter Name"  value="{{ old('name', isset($operator_user) ? $operator_user->name : "") }}">
+            @error('name')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
-        <div class="form-group">
-            <label for="name">Operator ID</label>
-            <input type="text" class="form-control" name="operator_id" id="operator_id" placeholder="Enter Operator ID" required>
+    </div>
+    <div class="form-group row">
+        <label for="state_id" class="col-sm-2 col-form-label">Operator</label>
+        <div class="col-sm-10">
+            <x-adminlte-select2 name="operator_id" id="operator_id">
+                <option value=""> -- Select One --</option>
+                @foreach ($operators as $operator)
+                <option value="{{$operator->id}}" {{ (old('operator_id') == $operator->id || isset($operator_user) && $operator_user->operator_id == $operator->id) ? "selected" : "" }}>{{ $operator->name }}</option>
+                @endforeach
+            </x-adminlte-select2>
         </div>
-        <div class="form-group">
-            <label for="name">Email</label>
-            <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" required>
+    </div>
+    <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Enter Email"  value="{{ old('email', isset($operator_user) ? $operator_user->email : "") }}">
+            @error('email')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
-        {{-- Password field --}}
-        <div class="form-group">
-        <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                   placeholder="{{ __('adminlte::adminlte.password') }}">
-
-
+    </div>
+    <div class="form-group row">
+        <label for="password" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Enter Password"  autocomplete="current-password">
             @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
-
-        {{-- Confirm password field --}}
-        <div class="form-group">
-        <label for="confirm_password">Confirm Password</label>
-            <input type="password" name="password_confirmation"
-                   class="form-control @error('password_confirmation') is-invalid @enderror"
-                   placeholder="{{ __('adminlte::adminlte.retype_password') }}">
-
-            
-            @error('password_confirmation')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" required>
-            <label class="form-check-label" for="checkout">Check me out</label>
+    </div>
+    <div class="form-group row">
+        <label for="password" class="col-sm-2 col-form-label">Confirm Password</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"" id=" confirm_password" name="confirm_password" placeholder="Enter Confirm Password"  autocomplete="current-password"> 
         </div>
     </div>
 
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
-@endif
-@if(Request::is('*/edit'))
-<form action="{{ route('operatorUsers.update', $data->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-    <div class="card-body">
-    <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" value="{{ $data->name }}" name="name" id="name" placeholder="Enter Name" required>
-        </div>
-        <div class="form-group">
-            <label for="name">Operator ID</label>
-            <input type="text" class="form-control" value="{{ $data->operator_id }}" name="operator_id" id="operator_id" placeholder="Enter Operator ID" required>
-        </div>
-        <div class="form-group">
-            <label for="name">Email</label>
-            <input type="text" class="form-control" value="{{ $data->email }}" name="email" id="email" placeholder="Enter Email" required>
-        </div>
-        {{-- Password field --}}
-        <div class="form-group">
-        <label for="password">Password</label>
-            <input type="password" id="password" value="{{ $data->password}}" name="password" class="form-control @error('password') is-invalid @enderror"
-                   placeholder="{{ __('adminlte::adminlte.password') }}">
-
-
-            @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-
-        {{-- Confirm password field --}}
-        <div class="form-group">
-        <label for="confirm_password">Confirm Password</label>
-            <input type="password" name="password_confirmation" value="{{ $data->password}}"
-                   class="form-control @error('password_confirmation') is-invalid @enderror"
-                   placeholder="{{ __('adminlte::adminlte.retype_password') }}">
-
-            
-            @error('password_confirmation')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" required>
-            <label class="form-check-label" for="checkout">Check me out</label>
-        </div>
-    </div>
-
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
-@endif
+</div>          

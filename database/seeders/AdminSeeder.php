@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         DB::table('states')->insert([
-            'name' => 'Rajasthan',
+            'name' => 'Maharashtra',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

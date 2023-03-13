@@ -71,11 +71,13 @@ Route::post('/operator/confirm', [ConfirmPasswordController::class, 'operatorSto
 ->name('operator.password.store'); 
 
 
-
+Route::get('admin/operators/datatable', [OperatorController::class, 'datatable'])->middleware('auth:admin')->name('operators.datatable');
 Route::resource('admin/operators', OperatorController::class)->middleware('auth:admin');
 
+Route::get('admin/operatorUsers/datatable', [OperatorUserController::class, 'datatable'])->middleware('auth:admin')->name('operatorUsers.datatable');
 Route::resource('admin/operatorUsers', OperatorUserController::class)->middleware('auth:admin');
 
+Route::get('admin/cities/datatable', [CityController::class, 'datatable'])->middleware('auth:admin')->name('cities.datatable');
 Route::resource('admin/cities', CityController::class)->middleware('auth:admin');
 
 // Route::resource('operator/operatorUsers', OperatorUserController::class)->middleware('auth:operator');

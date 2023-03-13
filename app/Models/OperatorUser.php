@@ -22,6 +22,7 @@ class OperatorUser extends Authenticatable
         'name',
         'email',
         'password',
+        'operator_id'
     ];
 
     /**

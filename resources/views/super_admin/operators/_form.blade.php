@@ -1,49 +1,22 @@
-@if(Request::is('*/create'))
-<form action="{{ route('operators.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <div class="card-body">
-    <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required>
-        </div>
-        <div class="form-group">
-            <label for="name">City ID</label>
-            <input type="text" class="form-control" name="city_id" id="city_id" placeholder="Enter City ID" required>
-        </div>
-
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" required>
-            <label class="form-check-label" for="checkout">Check me out</label>
+<div class="card-body">
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input type="name" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter Name" value="{{ old('name', isset($operator) ? $operator->name : "") }}">
+            @error('name')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
     </div>
-
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
-@endif
-@if(Request::is('*/edit'))
-<form action="{{ route('operators.update', $data->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-    <div class="card-body">
-    <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" value="{{ $data->name }}" name="name" id="name" placeholder="Enter Name" required>
-        </div>
-        <div class="form-group">
-            <label for="name">City ID</label>
-            <input type="text" class="form-control" value="{{ $data->city_id }}" name="city_id" id="city_id" placeholder="Enter City ID" required>
-        </div>
-
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" required>
-            <label class="form-check-label" for="checkout">Check me out</label>
+    <div class="form-group row">
+        <label for="state_id" class="col-sm-2 col-form-label">City</label>
+        <div class="col-sm-10">
+            <x-adminlte-select2 name="city_id" id="city_id">
+                <option value=""> -- Select One --</option>
+                @foreach ($cities as $city)
+                <option value="{{$city->id}}"  {{ (old('city_id') == $city->id || isset($operator) && $operator->city_id == $city->id) ? "selected" : "" }}>{{ $city->name }}</option>
+                @endforeach
+            </x-adminlte-select2>
         </div>
     </div>
-
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
-@endif
+</div>

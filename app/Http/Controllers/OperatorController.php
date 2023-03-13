@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Operator;
+use App\Models\City;
+use Exception;
+use Yajra\DataTables\Facades\DataTables;
 
 class OperatorController extends Controller
 {
@@ -12,18 +15,23 @@ class OperatorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {   
-       
+    public function index(Request $request)
+    {
+
         $user = 'Operators';
         $heads = [
             'ID',
             'Name',
-            'City ID',
+            'City',
             ['label' => 'Actions', 'no-export' => true, 'width' => 10],
         ];
-        $data = Operator::all();
-        return view('super_admin.operators.index', compact('data','heads','user'));
+
+        return view('super_admin.operators.index', compact('heads', 'user'));
+    }
+
+    public function dataTable()
+    {
+        return Datatables::of(Operator::with('city'))->make(true);
     }
 
     /**
@@ -33,7 +41,9 @@ class OperatorController extends Controller
      */
     public function create()
     {
-        return view('super_admin.operators.create');
+        $user = 'Operators';
+        $cities = City::select('name', 'id')->get();
+        return view('super_admin.operators.create', compact('cities', 'user'));
     }
 
     /**
@@ -51,10 +61,10 @@ class OperatorController extends Controller
 
         Operator::create($validated);
 
-        return redirect() -> route('operators.index');
+        return redirect()->route('operators.index')->with('message', 'Data added Successfully');
     }
 
-        /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -62,10 +72,6 @@ class OperatorController extends Controller
      */
     public function show($id)
     {
-        $req = Operator::find($id);
-        $req->delete();
-
-        return redirect()->route('operators.index');
     }
     /**
      * Show the form for editing the specified resource.
@@ -75,9 +81,11 @@ class OperatorController extends Controller
      */
     public function edit($id)
     {
-        $data = Operator::find($id);
+        $operator = Operator::find($id);
+        $cities = City::all();
+        $user = 'Operators';
 
-        return view('super_admin.operators.edit', compact('data'));
+        return view('super_admin.operators.edit', compact('operator', 'cities', 'user'));
     }
 
     /**
@@ -89,12 +97,15 @@ class OperatorController extends Controller
      */
     public function update($id, Request $request)
     {
-        $data = Operator::find($id);
-        $data->name = $request->name;
-        $data->city_id = $request->city_id;
-        $data->save();
+        $request->validate([
+            'name' => 'required',
+            'city_id' => 'required',
+        ]);
 
-        return redirect()->route('operators.index');
+        $operator = Operator::find($id);
+        $operator->fill($request->all())->save();
+
+        return redirect()->route('operators.index')->with('message', 'Data updated Successfully');
     }
 
     /**
@@ -105,6 +116,11 @@ class OperatorController extends Controller
      */
     public function destroy($id)
     {
-       
+        try {
+            Operator::find($id)->delete();
+            return 'Operator has been deleted!';
+        } catch (Exception $e) {
+            return response('Contact Support!', 400);
+        }
     }
 }

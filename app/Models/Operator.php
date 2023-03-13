@@ -18,6 +18,7 @@ class Operator extends Model
      */
     protected $fillable = [
         'name',
+        'city_id'
     ];
 
     public function city(): BelongsTo
