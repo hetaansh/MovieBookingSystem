@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user -> name == 'Super Admin';
         });
         Gate::define('isOperator', function($user){
-            return $user -> name == 'Operator User 1';
+            return $user -> name == 'Operator Manager';
         });
         
         //

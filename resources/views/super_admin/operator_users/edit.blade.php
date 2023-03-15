@@ -29,7 +29,7 @@
         <h3 class="card-title">Edit Operator User</h3>
     </div>
 
-    <form class="form-horizontal" action="{{ route('operatorUsers.update', $operator_user->id) }}" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('operatorUsers.update', $operator_user->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -41,4 +41,8 @@
 
     </form>
 </div>
+@stop
+
+@section('js')
+@include('super_admin.__jquery_validations')
 @stop

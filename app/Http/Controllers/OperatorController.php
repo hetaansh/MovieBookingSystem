@@ -42,7 +42,7 @@ class OperatorController extends Controller
     public function create()
     {
         $user = 'Operators';
-        $cities = City::select('name', 'id')->get();
+        $cities = City::pluck('name','id')->all();
         return view('super_admin.operators.create', compact('cities', 'user'));
     }
 
@@ -86,7 +86,7 @@ class OperatorController extends Controller
     public function edit($id)
     {
         $operator = Operator::find($id);
-        $cities = City::all();
+        $cities = City::pluck('name','id')->all();
         $user = 'Operators';
 
         return view('super_admin.operators.edit', compact('operator', 'cities', 'user'));
@@ -103,7 +103,6 @@ class OperatorController extends Controller
     {
         $request->validate([
             'name' => 'required|max:50',
-            'city_id' => '',
         ]);
 
         $operator = Operator::find($id);

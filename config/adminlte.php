@@ -340,36 +340,6 @@ return [
             'url'  => 'admin/states',
             'active' => ['admin/states*']
         ],
-        [
-            'text'    => 'Operator Users Menu',
-            'icon'    => 'fas fa-fw fa-list',
-            'can'     => 'isOperator',
-            'submenu' => [
-                [
-                    'text' => 'Operator Users',
-                    'url'  => 'operator/operatorUsers',
-                ],
-            ],
-        ],
-        [
-            'text'    => 'Cinemas',
-            'icon'    => 'fa fa-map-marker',
-            'can'     => 'isOperator',
-            'url'  => 'operator/cinemas',
-        ],
-        [
-            'text'    => 'Screens',
-            'icon'    => 'fa fa-map-marker',
-            'can'     => 'isOperator',
-            'url'  => 'operator/screens',
-        ],
-
-        ['header' => 'account_settings'],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
     ],
 
     /*
@@ -524,6 +494,16 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'jQuery Validation' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '//adminlte.io/themes/v3/plugins/jquery-validation/jquery.validate.min.js',
                 ],
             ],
         ],

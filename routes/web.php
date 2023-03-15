@@ -8,6 +8,7 @@ use App\Http\Controllers\OperatorUserController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CinemaController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScreenController;
 use App\Http\Controllers\StateController;
@@ -86,6 +87,8 @@ Route::get('admin/states/datatable', [StateController::class, 'datatable'])->mid
 Route::resource('admin/states', StateController::class)->middleware('auth:admin');
 
 Route::resource('admin/profiles', ProfileController::class)->middleware('auth:admin');
+
+Route::resource('admin/passwords', PasswordController::class)->middleware('auth:admin');
 
 // Route::resource('operator/operatorUsers', OperatorUserController::class)->middleware('auth:operator');
 

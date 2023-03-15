@@ -32,7 +32,7 @@
 
     
 
-    <form class="form-horizontal" action="{{ route('operators.store') }}" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('operators.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @include('super_admin.operators._form')
         <div class="card-footer">
@@ -45,4 +45,8 @@
 
 
 
+@stop
+
+@section('js')
+@include('super_admin.__jquery_validations')
 @stop

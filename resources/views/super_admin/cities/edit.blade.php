@@ -28,7 +28,7 @@
     <div class="card-header">
         <h3 class="card-title">Edit City</h3>
     </div>
-    <form class="form-horizontal" action="{{ route('cities.update', $city->id) }}" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('cities.update', $city->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -42,4 +42,8 @@
     </form>
 </div>
 
+@stop
+
+@section('js')
+@include('super_admin.__jquery_validations')
 @stop

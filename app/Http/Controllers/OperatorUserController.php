@@ -43,7 +43,7 @@ class OperatorUserController extends Controller
     public function create()
     {   
         $user = 'Operator Users';
-        $operators = Operator::all();
+        $operators = Operator::pluck('name','id')->all();
         return view('super_admin.operator_users.create',compact('operators','user'));
     }
 
@@ -63,9 +63,7 @@ class OperatorUserController extends Controller
         ],
         [
             'operator_id.required' => 'Operator must be selected.',
-        ]
-    );
-        $validated['password'] = Hash::make($validated['password']);
+        ]);
 
         OperatorUser::create($validated);
 
@@ -91,7 +89,7 @@ class OperatorUserController extends Controller
     public function edit($id)
     {
         $operator_user = OperatorUser::find($id);
-        $operators = Operator::all();
+        $operators = Operator::pluck('name','id')->all();
         $user = 'Operator Users';
         // $user = auth()->user()->name;
         // if($operator_users -> name === $user){
@@ -111,18 +109,18 @@ class OperatorUserController extends Controller
     public function update($id, Request $request)
     {   
 
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|max:50',
-            'operator_id' => '',
             'email' => 'required',
-            'password' => 'required|min:8|confirmed',
-
+            'password' => ''
         ]);
 
         
+        
+
+        
         $operator_user = OperatorUser::find($id);
-        $operator_user->password = Hash::make($operator_user->password);
-        $operator_user->fill($request->all())->save();
+        $operator_user->fill($validated)->save();
 
         
 

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Operator Users')
+@section('title', 'Profile')
 
 @section('content')
 
@@ -36,27 +36,25 @@
     </section>
 
     <div class="card card-info">
-    <div class="card-header">
-        <h3 class="card-title">Update Profile</h3>
-    </div>
-
-    <form class="form-horizontal" action="{{ route('profiles.update', Auth::id()) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-
-    @include('super_admin.profile._form')
-
-    <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="submit" class="btn btn-default float-right"><a href="{{ url('admin/dashboard') }}">Cancel</a></button>
+        <div class="card-header">
+            <h3 class="card-title">Update Profile</h3>
         </div>
 
-    </form>
+        <form class="form-horizontal" data-validate="true" novalidate action="{{ route('profiles.update', Auth::id()) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
 
-    
+            @include('super_admin.profile._form')
+
+            <div class="card-footer">
+                <button type="submit" id="sub" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-default float-right"><a href="{{ url('admin/dashboard') }}">Cancel</a></button>
+            </div>
+
+        </form>
+
+
 </body>
-
-
 
 <script>
     @if(Session::has('message'))
@@ -67,6 +65,15 @@
         "fadeOut": 5000,
     }
     toastr.success("{{ session('message') }}");
+    @endif
+    @if(Session::has('fail-message'))
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "tapToDismiss": true,
+        "fadeOut": 5000,
+    }
+    toastr.error("{{ session('fail-message') }}");
     @endif
 </script>
 
@@ -80,5 +87,5 @@
 @stop
 
 @section('js')
-
+@include('super_admin.__jquery_validations')
 @stop

@@ -29,7 +29,7 @@
         <h3 class="card-title">Edit State</h3>
     </div>
 
-    <form class="form-horizontal" action="{{ route('states.update', $state->id) }}" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('states.update', $state->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('super_admin.states._form')
@@ -42,4 +42,8 @@
 </div>
 
 
+@stop
+
+@section('js')
+@include('super_admin.__jquery_validations')
 @stop

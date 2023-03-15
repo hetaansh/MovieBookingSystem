@@ -45,7 +45,7 @@ class StateController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:85',
+            'name' => 'required|max:50',
         ],
     );
         
@@ -89,7 +89,7 @@ class StateController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|max:85',
+            'name' => 'required|max:50',
         ]);
         
         $state = State::find($id);

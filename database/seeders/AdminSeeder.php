@@ -17,8 +17,10 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('states')->insert([
-            'name' => 'Maharashtra',
+        DB::table('admins')->insert([
+            'name' => 'Super Admin',
+            'email' => 'hetaanshgadhiya@gmail.com',
+            'password' => Hash::make('123456789'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

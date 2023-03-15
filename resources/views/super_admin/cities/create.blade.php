@@ -29,7 +29,7 @@
     </div>
 
 
-    <form class="form-horizontal" action="{{ route('cities.store') }}" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('cities.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         @include('super_admin.cities._form')
@@ -41,5 +41,8 @@
 
     </form>
 </div>
+@stop
 
+@section('js')
+@include('super_admin.__jquery_validations')
 @stop

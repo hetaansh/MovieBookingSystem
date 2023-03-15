@@ -35,7 +35,7 @@ class CityController extends Controller
     public function create()
     {   
         $user = 'Cities';
-        $states = State::all();
+        $states = State::pluck('name','id')->all();
         return view('super_admin.cities.create',compact('states','user'));
     }
 
@@ -48,7 +48,7 @@ class CityController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:85',
+            'name' => 'required|max:50',
             'state_id' => 'required',
         ],
         [
@@ -81,7 +81,7 @@ class CityController extends Controller
     public function edit($id)
     {
         $city = City::find($id);
-        $states = State::all();
+        $states = State::pluck('name','id')->all();
         $user = 'City';
 
         return view('super_admin.cities.edit', compact('city','states','user'));
@@ -97,8 +97,7 @@ class CityController extends Controller
     public function update(Request $request, $id)
     {   
         $request->validate([
-            'name' => 'required|max:85',
-            'state_id' => '',
+            'name' => 'required|max:50',
         ]);
         
         $city = City::find($id);

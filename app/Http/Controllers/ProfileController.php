@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
@@ -71,13 +72,33 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $user_id = Admin::find($id);
+
+        $validate = $request->validate([
             'name' => 'required|max:50',
             'email' => 'required',
         ]);
+
+        if($request->hasFile('image')) {
+
+            $old = 'profile/images/' . $user_id -> image;
+            if(File::exists($old)){
+                File::delete($old);
+            }
+            $file = $request->file('image');
+            $extension = $file -> getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('profile/images/',$filename);
+            $user_id -> image = $filename;
+        }
+        $user = $validate;
+
+        if($request->name == $user_id -> name && $request->email == $user_id -> email){
+            return redirect()->back()->with('fail-message','No changes found.');
+        }
         
-        $user = Admin::find($id);
-        $user->fill($request->all())->save();
+        
+        $user_id->fill($user)->save();
 
         return redirect()->back()->with('message','Data updated Successfully');
     }
