@@ -19,15 +19,7 @@ class OperatorUserController extends Controller
     public function index()
     {
         $user = 'Operator Users';
-        $heads = [
-            'ID',
-            'Operator',
-            'Name',
-            'Email',
-            ['label' => 'Actions', 'no-export' => true, 'width' => 10],
-        ];
-       
-        return view('super_admin.operator_users.index', compact('heads','user'));
+        return view('super_admin.operator_users.index', compact('user'));
     }
 
     public function dataTable()

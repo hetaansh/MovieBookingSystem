@@ -340,6 +340,21 @@ return [
             'url'  => 'admin/states',
             'active' => ['admin/states*']
         ],
+        [
+            'text'    => 'Movies',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isAdmin',
+            'url'  => 'admin/movies',
+            'active' => ['admin/movies*']
+        ],
+
+        [
+            'text'    => 'Cinemas',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isOperator',
+            'url'  => 'operator/cinemas',
+            'active' => ['operator/cinemas*']
+        ],
     ],
 
     /*

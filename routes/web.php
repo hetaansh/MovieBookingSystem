@@ -7,10 +7,9 @@ use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\OperatorUserController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\CityController;
-use App\Http\Controllers\CinemaController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ScreenController;
 use App\Http\Controllers\StateController;
 
 /*
@@ -86,12 +85,10 @@ Route::resource('admin/cities', CityController::class)->middleware('auth:admin')
 Route::get('admin/states/datatable', [StateController::class, 'datatable'])->middleware('auth:admin')->name('states.datatable');
 Route::resource('admin/states', StateController::class)->middleware('auth:admin');
 
+Route::get('admin/movies/datatable', [MovieController::class, 'datatable'])->middleware('auth:admin')->name('movies.datatable');
+Route::resource('admin/movies', MovieController::class)->middleware('auth:admin');
+
 Route::resource('admin/profiles', ProfileController::class)->middleware('auth:admin');
 
 Route::resource('admin/passwords', PasswordController::class)->middleware('auth:admin');
 
-// Route::resource('operator/operatorUsers', OperatorUserController::class)->middleware('auth:operator');
-
-// Route::resource('operator/cinemas', CinemaController::class)->middleware('auth:operator');
-
-// Route::resource('operator/screens', ScreenController::class)->middleware('auth:operator');

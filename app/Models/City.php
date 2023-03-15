@@ -30,4 +30,9 @@ class City extends Model
     {
         return $this->hasMany(Operator::class);
     }
+
+    public function cinemas(): HasMany
+    {
+        return $this->hasMany(Cinema::class);
+    }
 }
