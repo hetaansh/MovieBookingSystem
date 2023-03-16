@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Models\OperatorUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
-class ProfileController extends Controller
+
+class OperatorPasswordController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        
+    {
+        //
     }
 
     /**
@@ -58,9 +58,9 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $data = Admin::find($id);
-        $user = 'Profile';
-        return view('super_admin.profile.index',compact('user','data'));
+        $data = OperatorUser::find($id);
+        $user = 'Password';
+        return view('operator.password.index',compact('user','data'));
     }
 
     /**
@@ -72,33 +72,18 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user_id = Admin::find($id);
-
-        $validate = $request->validate([
-            'name' => 'required|max:50',
-            'email' => 'required',
+        $validated = $request->validate([
+            'password' => 'required|min:8|confirmed',
         ]);
 
-        if($request->hasFile('image')) {
-
-            $old = 'profile/images/' . $user_id -> image;
-            if(File::exists($old)){
-                File::delete($old);
-            }
-            $file = $request->file('image');
-            $extension = $file -> getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $file->move('profile/images/',$filename);
-            $user_id -> image = $filename;
-        }
-        $user = $validate;
-
+        
+        $admin_user = OperatorUser::find($id);
+        $admin_user->fill($validated)->save();
 
         
-        
-        $user_id->fill($user)->save();
 
-        return redirect()->back()->with('message','Data updated Successfully');
+
+        return redirect()->back()->with('message','Password Changed Successfully');
     }
 
     /**

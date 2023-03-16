@@ -342,7 +342,7 @@ return [
         ],
         [
             'text'    => 'Movies',
-            'icon'    => 'fa fa-map-marker',
+            'icon'    => 'fa fa-film',
             'can'     => 'isAdmin',
             'url'  => 'admin/movies',
             'active' => ['admin/movies*']
@@ -350,10 +350,38 @@ return [
 
         [
             'text'    => 'Cinemas',
-            'icon'    => 'fa fa-map-marker',
+            'icon'    => 'fa fa-film',
             'can'     => 'isOperator',
             'url'  => 'operator/cinemas',
             'active' => ['operator/cinemas*']
+        ],
+        [
+            'text'    => 'Screens',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isOperator',
+            'url'  => 'operator/screens',
+            'active' => ['operator/screens*']
+        ],
+        [
+            'text'    => 'Shows',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isOperator',
+            'url'  => 'operator/shows',
+            'active' => ['operator/shows*']
+        ],
+        [
+            'text'    => 'Seats',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isOperator',
+            'url'  => 'operator/seats',
+            'active' => ['operator/seats*']
+        ],
+        [
+            'text'    => 'Tickets',
+            'icon'    => 'fa fa-map-marker',
+            'can'     => 'isOperator',
+            'url'  => 'operator/tickets',
+            'active' => ['operator/tickets*']
         ],
     ],
 

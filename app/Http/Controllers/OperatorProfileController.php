@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Models\OperatorUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class ProfileController extends Controller
+class OperatorProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -58,9 +58,9 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $data = Admin::find($id);
+        $data = OperatorUser::find($id);
         $user = 'Profile';
-        return view('super_admin.profile.index',compact('user','data'));
+        return view('operator.profile.index',compact('user','data'));
     }
 
     /**
@@ -72,7 +72,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user_id = Admin::find($id);
+        $user_id = OperatorUser::find($id);
 
         $validate = $request->validate([
             'name' => 'required|max:50',
@@ -92,8 +92,6 @@ class ProfileController extends Controller
             $user_id -> image = $filename;
         }
         $user = $validate;
-
-
         
         
         $user_id->fill($user)->save();

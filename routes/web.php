@@ -4,10 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
+use App\Http\Controllers\CinemaController;
 use App\Http\Controllers\OperatorUserController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\OperatorPasswordController;
+use App\Http\Controllers\OperatorProfileController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StateController;
@@ -92,3 +95,10 @@ Route::resource('admin/profiles', ProfileController::class)->middleware('auth:ad
 
 Route::resource('admin/passwords', PasswordController::class)->middleware('auth:admin');
 
+Route::get('operator/cinemas/datatable', [CinemaController::class, 'datatable'])->middleware('auth:operator')->name('cinemas.datatable');
+Route::resource('operator/cinemas', CinemaController::class)->middleware('auth:operator');
+
+
+Route::resource('operator/profile', OperatorProfileController::class)->middleware('auth:operator');
+
+Route::resource('operator/password', OperatorPasswordController::class)->middleware('auth:operator');

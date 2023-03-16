@@ -62,14 +62,27 @@
                 <i class="fa fa-fw fa-user text-lightblue"></i>
                 {{ __('adminlte::menu.profile') }}
             </a> -->
+            @auth('admin')
             <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif" href="{{ url('admin/profiles/' . Auth::id(). '/edit') }}">
+            @endauth
+            @auth('operator')
+            <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif" href="{{ url('operator/profile/' . Auth::id(). '/edit') }}">
+            @endauth
             <i class="fa fa-fw fa-user text-lightblue"></i>
                 {{ __('adminlte::menu.profile') }}
             </a>
+
+            @auth('admin')
             <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif" href="{{ url('admin/passwords/' . Auth::id(). '/edit') }}">
+            @endauth
+            @auth('operator')
+            <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif" href="{{ url('operator/password/' . Auth::id(). '/edit') }}">
+            @endauth
             <i class="fas fa-fw fa-lock "></i>
                 Password
             </a>
+
+            
             <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa fa-fw fa-power-off text-red"></i>
                 {{ __('adminlte::adminlte.log_out') }}
