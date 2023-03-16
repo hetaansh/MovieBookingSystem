@@ -104,9 +104,16 @@ class CinemaController extends Controller
         ]);
         
         $cinema = Cinema::find($id);
-        $cinema->fill($request->all())->save();
 
-        return redirect()->route('cinemas.index')->with('message','Data updated Successfully');
+        $cinema->fill($request->all());
+
+        if($cinema->isDirty()){
+            $cinema->save();
+            return redirect()->route('cinemas.index')->with('message','Data updated Successfully');
+        }
+        
+        return redirect()->route('cinemas.index')->with('fail-message','Data not Updated');
+      
     }
 
     /**

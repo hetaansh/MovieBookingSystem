@@ -107,16 +107,9 @@ class OperatorUserController extends Controller
             'password' => ''
         ]);
 
-        
-        
-
-        
         $operator_user = OperatorUser::find($id);
         $operator_user->fill($validated)->save();
-
-        
-
-
+     
         return redirect()->route('operatorUsers.index')->with('message','Data updated Successfully');
     }
 

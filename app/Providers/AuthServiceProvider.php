@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Models\Admin;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,10 +34,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user -> name == 'user one';
         });
         Gate::define('isAdmin', function($user){
-            return $user -> name == 'Super Admin';
+            return $user = Auth::guard('admin') -> user();
         });
         Gate::define('isOperator', function($user){
-            return $user -> name == 'Operator Manager';
+            return $user = Auth::guard('operator') -> user();
         });
         
         //

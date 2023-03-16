@@ -170,6 +170,16 @@
     }
     toastr.success("{{ session('message') }}");
     @endif
+
+    @if(Session::has('fail-message'))
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "tapToDismiss": true,
+        "fadeOut": 5000,
+    }
+    toastr.error("{{ session('fail-message') }}");
+    @endif
 </script>
 
 

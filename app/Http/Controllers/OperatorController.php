@@ -99,9 +99,16 @@ class OperatorController extends Controller
         ]);
 
         $operator = Operator::find($id);
-        $operator->fill($request->all())->save();
 
-        return redirect()->route('operators.index')->with('message', 'Data updated Successfully');
+        $operator->fill($request->all());
+
+        if($operator->isDirty()){
+            $operator->save();
+            return redirect()->route('operators.index')->with('message','Data updated Successfully');
+        }
+        
+        return redirect()->route('operators.index')->with('fail-message','Data not Updated');
+        
     }
 
     /**

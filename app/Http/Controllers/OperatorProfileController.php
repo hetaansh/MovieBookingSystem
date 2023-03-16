@@ -93,10 +93,15 @@ class OperatorProfileController extends Controller
         }
         $user = $validate;
         
-        
-        $user_id->fill($user)->save();
+        $user_id->fill($user);
 
-        return redirect()->back()->with('message','Data updated Successfully');
+        if($user_id->isDirty()){
+            $user_id->save();
+            return redirect()->back()->with('message','Data updated Successfully');
+        }
+        
+        return redirect()->back()->with('fail-message','Data not Updated');
+        
     }
 
     /**

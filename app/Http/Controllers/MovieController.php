@@ -101,9 +101,16 @@ class MovieController extends Controller
         ]);
 
         $movie = Movie::find($id);
-        $movie->fill($request->all())->save();
 
-        return redirect()->route('movies.index')->with('message', 'Data updated Successfully');
+        $movie->fill($request->all());
+
+        if($movie->isDirty()){
+            $movie->save();
+            return redirect()->route('movies.index')->with('message','Data updated Successfully');
+        }
+        
+        return redirect()->route('movies.index')->with('fail-message','Data not Updated');
+       
     }
 
     /**

@@ -93,12 +93,15 @@ class ProfileController extends Controller
         }
         $user = $validate;
 
+        $user_id->fill($user);
 
+        if($user_id->isDirty()){
+            $user_id->save();
+            return redirect()->back()->with('message','Data updated Successfully');
+        }
         
+        return redirect()->back()->with('fail-message','Data not Updated');
         
-        $user_id->fill($user)->save();
-
-        return redirect()->back()->with('message','Data updated Successfully');
     }
 
     /**

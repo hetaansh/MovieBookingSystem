@@ -93,9 +93,16 @@ class StateController extends Controller
         ]);
         
         $state = State::find($id);
-        $state->fill($request->all())->save();
 
-        return redirect()->route('states.index')->with('message','Data updated Successfully');
+        $state->fill($request->all());
+
+        if($state->isDirty()){
+            $state->save();
+            return redirect()->route('states.index')->with('message','Data updated Successfully');
+        }
+        
+        return redirect()->route('states.index')->with('fail-message','Data not Updated');
+
     }
 
     /**

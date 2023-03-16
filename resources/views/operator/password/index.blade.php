@@ -48,7 +48,7 @@
 
     <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="submit" class="btn btn-default float-right"><a href="{{ url('operator/dashboard') }}">Cancel</a></button>
+            <button type="submit" class="btn btn-default float-right"><a href="{{ url('admin/dashboard') }}">Cancel</a></button>
         </div>
 
     </form>

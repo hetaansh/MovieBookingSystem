@@ -70,10 +70,10 @@ Route::get('/operator/email',[ResetPasswordController::class,'showOperatorResetF
 Route::post('/operator/email',[ResetPasswordController::class,'sendOperatorResetForm'])->name('operator.email');
 
 Route::get('/operator/reset/{token}', [ConfirmPasswordController::class, 'operatorCreate'])
-->name('operator.password.confirm');
+->name('operator.passwordss.confirm');
 
 Route::post('/operator/confirm', [ConfirmPasswordController::class, 'operatorStore'])
-->name('operator.password.store'); 
+->name('operator.passwordss.store'); 
 
 
 Route::get('admin/operators/datatable', [OperatorController::class, 'datatable'])->middleware('auth:admin')->name('operators.datatable');
@@ -101,4 +101,4 @@ Route::resource('operator/cinemas', CinemaController::class)->middleware('auth:o
 
 Route::resource('operator/profile', OperatorProfileController::class)->middleware('auth:operator');
 
-Route::resource('operator/password', OperatorPasswordController::class)->middleware('auth:operator');
+// Route::resource('operator/password', OperatorPasswordController::class)->middleware('auth:operator');

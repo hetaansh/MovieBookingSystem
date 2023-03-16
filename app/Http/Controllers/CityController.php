@@ -101,9 +101,16 @@ class CityController extends Controller
         ]);
         
         $city = City::find($id);
-        $city->fill($request->all())->save();
 
-        return redirect()->route('cities.index')->with('message','Data updated Successfully');
+        $city->fill($request->all());
+
+        if($city->isDirty()){
+            $city->save();
+            return redirect()->route('cities.index')->with('message','Data updated Successfully');
+        }
+        
+        return redirect()->route('cities.index')->with('fail-message','Data not Updated');
+       
     }
 
     /**
