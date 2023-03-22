@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('duration');
             $table->string('director');
             $table->string('movie_cast');
+            $table->dateTime('release_at');
             $table->timestamps();
         });
     }

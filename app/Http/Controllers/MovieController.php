@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Exception;
+use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\View;
 
 class MovieController extends Controller
 {
+    public function __construct()
+    {
+        $title = "Movies";
+        View::share('title', $title);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +23,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $user = 'Movies';
-        return view('super_admin.movies.index', compact('user'));
+        return view('super_admin.movies.index');
     }
 
     public function dataTable()
@@ -32,8 +38,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        $user = 'Movies';
-        return view('super_admin.movies.create', compact('user'));
+        return view('super_admin.movies.create');
     }
 
     /**
@@ -50,8 +55,11 @@ class MovieController extends Controller
             'duration' => 'required|max:50',
             'director' => 'required|max:50',
             'movie_cast' => 'required|max:255',
+            'release_at' => 'required',
 
         ]);
+
+        
 
         Movie::create($validated);
 
@@ -78,9 +86,7 @@ class MovieController extends Controller
     public function edit($id)
     {
         $movie = Movie::find($id);
-        $user = 'Movies';
-
-        return view('super_admin.movies.edit', compact('movie', 'user'));
+        return view('super_admin.movies.edit', compact('movie'));
     }
 
     /**
@@ -92,17 +98,20 @@ class MovieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|max:50',
             'description' => 'required|max:255',
             'duration' => 'required|max:50',
             'director' => 'required|max:50',
             'movie_cast' => 'required|max:255',
+            'release_at' => 'required',
         ]);
+
+        
 
         $movie = Movie::find($id);
 
-        $movie->fill($request->all());
+        $movie->fill($validated);
 
         if($movie->isDirty()){
             $movie->save();

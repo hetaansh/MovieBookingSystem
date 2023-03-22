@@ -13,6 +13,9 @@ class Screen extends Model
 
     protected $fillable = [
         'cinema_id',
+        'name',
+        'rows',
+        'cols',
     ];
 
     public function cinema(): BelongsTo

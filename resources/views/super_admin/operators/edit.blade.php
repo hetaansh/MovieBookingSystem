@@ -15,9 +15,10 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ url('admin/operators/' . $operator->id . '/edit') }}">Edit</a></li>
-                    <li class="breadcrumb-item active"><a style="color:#6c757d" href="{{ route('operators.index') }}">Home</a></li>
-                    <li class="breadcrumb-item active">{{ $user }}</li>
+                   
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('operators.index') }}">{{ $title }}</a></li>
+                    <li class="breadcrumb-item active"><a>Edit</a></li>
                 </ol>
             </div>
         </div>

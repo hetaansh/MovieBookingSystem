@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Cinemas')
+@section('title', 'Shows')
 
 @section('content')
 
@@ -44,7 +44,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div style="padding-bottom:20px;float:right">
-                                <a class="btn btn-sm btn-secondary mx-2 " href="{{ route('cinemas.create') }}">Add Cinema</a>
+                                <a class="btn btn-sm btn-secondary mx-2 " href="{{ route('shows.create') }}">Add Show</a>
                             </div>
 
 
@@ -53,10 +53,12 @@
                             <table id="table1" class="table table-striped table-bordered" style="text-align: center;">
                                 <thead style="background-color: #e9ecef;">
                                     <tr>
-                                        <th style="text-align: center;">Name</th>
-                                        <th style="text-align: center;">City</th>
-                                        <th style="text-align: center;">Address</th>
-                                        <th style="text-align: center;">Pincode</th>
+                                        <th style="text-align: center;">Cinema</th>
+                                        <th style="text-align: center;">Screen</th>
+                                        <th style="text-align: center;">Movie</th>
+                                        <th style="text-align: center;">Price</th>
+                                        <th style="text-align: center;">Starts at</th>
+                                        <th style="text-align: center;">Ends at</th>
                                         <th style="width:150px;text-align: center;">Action</th>
                                     </tr>
                                 </thead>
@@ -64,10 +66,12 @@
                                 </tbody>
                                 <thead style="background-color: #e9ecef;">
                                     <tr>
-                                        <th style="text-align: center;">Name</th>
-                                        <th style="text-align: center;">City</th>
-                                        <th style="text-align: center;">Address</th>
-                                        <th style="text-align: center;">Pincode</th>
+                                        <th style="text-align: center;">Cinema</th>
+                                        <th style="text-align: center;">Screen</th>
+                                        <th style="text-align: center;">Movie</th>
+                                        <th style="text-align: center;">Price</th>
+                                        <th style="text-align: center;">Starts at</th>
+                                        <th style="text-align: center;">Ends at</th>
                                         <th style="width:150px;text-align: center;">Action</th>
                                     </tr>
                                 </thead>
@@ -89,28 +93,38 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: '{{ route("cinemas.datatable") }}'
+                url: '{{ route("shows.datatable") }}'
             },
             columns: [
+                                
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'shows.price',
+                    name: 'price'
                 },
                 {
-                    data: 'city.name',
-                    name: 'city.name'
+                    data: 'shows.starts_at',
+                    name: 'shows.starts_at'
                 },
                 {
-                    data: 'address',
-                    name: 'address'
+                    data: 'shows.ends_at',
+                    name: 'shows.ends_at'
                 },
                 {
-                    data: 'pincode',
-                    name: 'pincode'
+                    data: 'screens.name',
+                    name: 'screens.name'
+                },
+                {
+                    data: 'screens.name',
+                    name: 'screens.name'
+                },
+
+                {
+                    data: 'movie.name',
+                    name: 'movie.name'
                 },
                 {
                     data: function(row) {
-                        return '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit" href="cinemas/' + row.id + '/edit" value="' + row.id + '"> ' + '<i class="fa fa-lg fa-fw fa-pen"></i>' + '</a>' +
+                        return '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit" href="shows/' + row.id + '/edit" value="' + row.id + '"> ' + '<i class="fa fa-lg fa-fw fa-pen"></i>' + '</a>' +
                             '<a class="button btn btn-xs btn-default text-primary mx-1 shadow" title="Delete" data-id="' + row.id + '"> ' + '<i class="fa fa-lg fa-fw fa-trash"></i>' + '</a>'
                     },
                     name: 'id',
@@ -137,7 +151,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('operator/cinemas') }}/" + id,
+                    url: "{{ url('operator/shows') }}/" + id,
                     data: {
                         _token: "{{ csrf_token() }}",
                         _method: "DELETE",

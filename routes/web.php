@@ -13,6 +13,8 @@ use App\Http\Controllers\OperatorPasswordController;
 use App\Http\Controllers\OperatorProfileController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScreenController;
+use App\Http\Controllers\ShowController;
 use App\Http\Controllers\StateController;
 
 /*
@@ -98,7 +100,14 @@ Route::resource('admin/passwords', PasswordController::class)->middleware('auth:
 Route::get('operator/cinemas/datatable', [CinemaController::class, 'datatable'])->middleware('auth:operator')->name('cinemas.datatable');
 Route::resource('operator/cinemas', CinemaController::class)->middleware('auth:operator');
 
+Route::get('operator/screens/datatable', [ScreenController::class, 'datatable'])->middleware('auth:operator')->name('screens.datatable');
+Route::resource('operator/screens', ScreenController::class)->middleware('auth:operator');
 
 Route::resource('operator/profile', OperatorProfileController::class)->middleware('auth:operator');
+
+Route::post('operator/shows/getMovie', [ShowController::class, 'getMovie'])->middleware('auth:operator')->name('shows.getMovie');
+Route::post('operator/shows/getScreen', [ShowController::class, 'getScreen'])->middleware('auth:operator')->name('shows.getScreen');
+Route::get('operator/shows/datatable', [ShowController::class, 'datatable'])->middleware('auth:operator')->name('shows.datatable');
+Route::resource('operator/shows', ShowController::class)->middleware('auth:operator');
 
 // Route::resource('operator/password', OperatorPasswordController::class)->middleware('auth:operator');

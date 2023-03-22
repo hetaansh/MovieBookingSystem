@@ -23,12 +23,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ $user }}</h1>
+                    <h1>{{ $title }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('movies.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active">{{ $user }}</li>
+                        <li class="breadcrumb-item active">{{ $title }}</li>
                     </ol>
                 </div>
             </div>
@@ -57,6 +57,7 @@
                                         <th style="text-align: center;">Duration</th>
                                         <th style="text-align: center;">Director</th>
                                         <th style="text-align: center;">Movie Cast</th>
+                                        <th style="text-align: center;">Release Date</th>
                                         <th style="width:150px;text-align: center;">Action</th>
                                     </tr>
                                 </thead>
@@ -70,6 +71,7 @@
                                         <th style="text-align: center;">Duration</th>
                                         <th style="text-align: center;">Director</th>
                                         <th style="text-align: center;">Movie Cast</th>
+                                        <th style="text-align: center;">Release Date</th>
                                         <th style="width:150px;text-align: center;">Action</th>
                                     </tr>
                                 </thead>
@@ -116,6 +118,10 @@
                 {
                     data: 'movie_cast',
                     name: 'movie_cast'
+                },
+                {
+                    data: 'release_at',
+                    name: 'release_at'
                 },
                 {
                     data: function(row) {

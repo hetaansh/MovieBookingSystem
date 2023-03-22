@@ -3,24 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cinema;
-use App\Models\City;
-use App\Models\OperatorUser;
+use App\Models\Screen;
+
 use Error;
 use Illuminate\Http\Request;
 use Exception;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
-class CinemaController extends Controller
+class ScreenController extends Controller
 {
     public function __construct()
     {
-        $title = "Cinemas";
+        $title = "Screen";
         View::share('title', $title);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -28,12 +27,12 @@ class CinemaController extends Controller
      */
     public function index()
     {
-        return view('operator.cinemas.index');
+        return view('operator.screens.index');
     }
 
     public function dataTable()
     {
-        return Datatables::of(Auth::user()->operator->cinemas()->with('city'))->make(true);
+        return Datatables::of(Auth::user()->operator->screens()->with('cinema')->select('screens.*'))->make(true);
     }
 
     /**
@@ -43,9 +42,8 @@ class CinemaController extends Controller
      */
     public function create()
     {
-        $title = 'Cinemas';
-        $cities = City::pluck('name', 'id')->all();
-        return view('operator.cinemas.create', compact('cities', 'title'));
+        $cinemas = Auth::user()->operator->cinemas()->pluck('name', 'id')->all();
+        return view('operator.screens.create', compact('cinemas'));
     }
 
     /**
@@ -56,22 +54,21 @@ class CinemaController extends Controller
      */
     public function store(Request $request)
     {
-
         $validated = $request->validate(
             [
                 'name' => 'required|max:50',
-                'city_id' => 'required',
-                'address' => 'required|max:255',
-                'pincode' => 'required|max:15',
+                'cinema_id' => 'required',
+                'rows' => 'required|max:3',
+                'cols' => 'required|max:3',
             ],
             [
-                'city_id' => 'City must be selected.'
+                'cinema_id.required' => 'Cinema must be selected.',
             ]
         );
 
-        Auth::user()->operator->cinemas()->create($validated);
+        Auth::user()->operator->screens()->with('cinema')->create($validated);
 
-        return redirect()->route('cinemas.index')->with('message', 'Data added Successfully');
+        return redirect()->route('screens.index')->with('message', 'Data added Successfully');
     }
 
     /**
@@ -93,15 +90,12 @@ class CinemaController extends Controller
      */
     public function edit($id)
     {
-        // return Auth::user()->operator->cinemas()->findOrFail($id);
         try {
-            $cinema = Auth::user()->operator->cinemas()->findOrFail($id);
-            $cities = City::pluck('name', 'id')->all();
-
-            $title = 'Cinemas';
-            return view('operator.cinemas.edit', compact('cinema', 'cities', 'title'));
+            $screen = Auth::user()->operator->screens()->with('cinema')->findOrFail($id);
+            $cinemas = Cinema::pluck('name', 'id')->all();
+            return view('operator.screens.edit', compact('screen', 'cinemas'));
         } catch (Exception $e) {
-            return redirect()->route('cinemas.index');
+            return redirect()->route('screens.index');
         }
     }
 
@@ -116,23 +110,23 @@ class CinemaController extends Controller
     {
         $request->validate([
             'name' => 'required|max:50',
-            'address' => 'required|max:255',
-            'pincode' => 'required|max:15',
+            'rows' => 'required|max:3',
+            'cols' => 'required|max:3',
         ]);
 
         try {
-            $cinema = Auth::user()->operator->cinemas()->findOrFail($id);
+            $screen = Auth::user()->operator->screens()->findOrFail($id);
 
-            $cinema->fill($request->all());
+            $screen->fill($request->all());
 
-            if ($cinema->isDirty()) {
-                $cinema->save();
-                return redirect()->route('cinemas.index')->with('message', 'Data updated Successfully');
+            if ($screen->isDirty()) {
+                $screen->save();
+                return redirect()->route('screens.index')->with('message', 'Data updated Successfully');
             }
 
-            return redirect()->route('cinemas.index')->with('fail-message', 'Data not Updated');
+            return redirect()->route('screens.index')->with('fail-message', 'Data not Updated');
         } catch (Exception $e) {
-            return redirect()->route('cinemas.index');
+            return redirect()->route('screens   .index');
         }
     }
 
@@ -145,8 +139,8 @@ class CinemaController extends Controller
     public function destroy($id)
     {
         try {
-            Cinema::find($id)->delete();
-            return 'Cinema has been deleted!';
+            Screen::find($id)->delete();
+            return 'Screen has been deleted!';
         } catch (Exception $e) {
             return response('Contact Support!', 400);
         }

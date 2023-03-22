@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('cinemas', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('operator_id');
+            $table->foreign('operator_id')
+                ->references('id')->on('operators');
             $table->unsignedInteger('city_id');
             $table->foreign('city_id')
               ->references('id')->on('cities');

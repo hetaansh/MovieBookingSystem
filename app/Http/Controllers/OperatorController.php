@@ -7,9 +7,15 @@ use App\Models\Operator;
 use App\Models\City;
 use Exception;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\View;
 
 class OperatorController extends Controller
 {
+    public function __construct()
+    {
+        $title = "Operators";
+        View::share('title', $title);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +24,7 @@ class OperatorController extends Controller
     public function index(Request $request)
     {
 
-        $user = 'Operators';
-        return view('super_admin.operators.index', compact('user'));
+        return view('super_admin.operators.index');
     }
 
     public function dataTable()
@@ -34,9 +39,8 @@ class OperatorController extends Controller
      */
     public function create()
     {
-        $user = 'Operators';
-        $cities = City::pluck('name','id')->all();
-        return view('super_admin.operators.create', compact('cities', 'user'));
+        $cities = City::pluck('name', 'id')->all();
+        return view('super_admin.operators.create', compact('cities'));
     }
 
     /**
@@ -47,14 +51,15 @@ class OperatorController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|max:50',
-            'city_id' => 'required',
-        ],
-        [
-            'city_id.required' => 'City must be selected.',
-        ]
-    );
+        $validated = $request->validate(
+            [
+                'name' => 'required|max:50',
+                'city_id' => 'required',
+            ],
+            [
+                'city_id.required' => 'City must be selected.',
+            ]
+        );
 
         Operator::create($validated);
 
@@ -79,12 +84,9 @@ class OperatorController extends Controller
     public function edit($id)
     {
         $operator = Operator::find($id);
-        $cities = City::pluck('name','id')->all();
-        $user = 'Operators';
-
-        return view('super_admin.operators.edit', compact('operator', 'cities', 'user'));
+        $cities = City::pluck('name', 'id')->all();
+        return view('super_admin.operators.edit', compact('operator', 'cities'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -102,13 +104,12 @@ class OperatorController extends Controller
 
         $operator->fill($request->all());
 
-        if($operator->isDirty()){
+        if ($operator->isDirty()) {
             $operator->save();
-            return redirect()->route('operators.index')->with('message','Data updated Successfully');
+            return redirect()->route('operators.index')->with('message', 'Data updated Successfully');
         }
-        
-        return redirect()->route('operators.index')->with('fail-message','Data not Updated');
-        
+
+        return redirect()->route('operators.index')->with('fail-message', 'Data not Updated');
     }
 
     /**

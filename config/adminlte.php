@@ -357,14 +357,14 @@ return [
         ],
         [
             'text'    => 'Screens',
-            'icon'    => 'fa fa-map-marker',
+            'icon'    => 'fa fa-desktop',
             'can'     => 'isOperator',
             'url'  => 'operator/screens',
             'active' => ['operator/screens*']
         ],
         [
             'text'    => 'Shows',
-            'icon'    => 'fa fa-map-marker',
+            'icon'    => 'fa fa-calendar',
             'can'     => 'isOperator',
             'url'  => 'operator/shows',
             'active' => ['operator/shows*']

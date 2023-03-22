@@ -16,6 +16,7 @@ class Movie extends Model
         'duration',
         'director',
         'movie_cast',
+        'release_at',
     ];
 
     public function shows(): HasMany

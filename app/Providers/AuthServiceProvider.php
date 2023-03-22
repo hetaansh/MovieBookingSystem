@@ -34,10 +34,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user -> name == 'user one';
         });
         Gate::define('isAdmin', function($user){
-            return $user = Auth::guard('admin') -> user();
+            return $user == Auth::guard('admin') -> user();
         });
         Gate::define('isOperator', function($user){
-            return $user = Auth::guard('operator') -> user();
+            return $user == Auth::guard('operator') -> user();
         });
         
         //

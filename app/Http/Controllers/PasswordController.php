@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\View;
 
 class PasswordController extends Controller
 {
+    public function __construct()
+    {
+        $title = "Password";
+        View::share('title', $title);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -59,8 +65,7 @@ class PasswordController extends Controller
     public function edit($id)
     {
         $data = Admin::find($id);
-        $user = 'Password';
-        return view('super_admin.passwords.index',compact('user','data'));
+        return view('super_admin.passwords.index',compact('data'));
     }
 
     /**

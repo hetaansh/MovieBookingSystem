@@ -14,10 +14,10 @@ class Show extends Model
     protected $fillable = [
         'screen_id',
         'movie_id',
-        'time',
-        'date',
-        'start',
-        'end',
+        'price',
+        'start_at',
+        'end_at',
+        
     ];
 
     public function screen(): BelongsTo

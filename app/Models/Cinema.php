@@ -17,12 +17,18 @@ class Cinema extends Model
         'pincode',
         'address',
         'city_id',
-        
+        'operator_id',
+        'release_at',
     ];
 
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
+    }
+
+    public function operator(): BelongsTo
+    {
+        return $this->belongsTo(Operator::class, 'operator_id', 'id');
     }
 
     public function screens(): HasMany

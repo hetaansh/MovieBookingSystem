@@ -31,7 +31,7 @@
     <div class="form-group row">
         <label for="pincode" class="col-sm-2 col-form-label">Pincode</label>
         <div class="col-sm-10">
-            <input type="name" class="form-control @error('pincode') is-invalid @enderror" id="pincode" name="pincode" placeholder="Enter Name" value="{{ old('pincode', isset($cinema) ? $cinema->pincode : "") }}" required data-rule-maxlength='15'>
+            <input type="number" class="form-control @error('pincode') is-invalid @enderror" id="pincode" name="pincode" placeholder="Enter Pincode" value="{{ old('pincode', isset($cinema) ? $cinema->pincode : "") }}" required data-rule-maxlength='15'>
             @error('pincode')
             <div class="text-danger">{{ $message }}</div>
             @enderror

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Update City')
+@section('title', 'Update Cinema')
 
 
 
@@ -15,9 +15,9 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ url('operator/cinemas/' . $cinema->id . '/edit') }}">Edit</a></li>
-                    <li class="breadcrumb-item active"><a style="color:#6c757d" href="{{ route('cinemas.index') }}">Home</a></li>
-                    <li class="breadcrumb-item active">{{ $user }}</li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('cinemas.index') }}">{{ $title }}</a></li>
+                    <li class="breadcrumb-item active"><a>Edit</a></li>
                 </ol>
             </div>
         </div>

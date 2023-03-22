@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Add Operator')
+@section('title', 'Update Screen')
 
 
 
@@ -15,36 +15,33 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                   
+                <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('operators.index') }}">{{ $title }}</a></li>
-                    <li class="breadcrumb-item active"><a>Add</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('screens.index') }}">{{ $title }}</a></li>
+                    <li class="breadcrumb-item active"><a>Edit</a></li>
                 </ol>
             </div>
         </div>
     </div>
 </section>
 
-
 <div class="card card-info">
     <div class="card-header">
-        <h3 class="card-title">Add Operator</h3>
+        <h3 class="card-title">Edit Screen</h3>
     </div>
-
-    
-
-    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('operators.store') }}" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('screens.update', $screen->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @include('super_admin.operators._form')
+        @method('PUT')
+
+        @include('operator.screens._form')
+
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a class="btn btn-default float-right" href="{{route('operators.index')}}">Cancel</a>
+            <a class="btn btn-default float-right" href="{{route('screens.index')}}">Cancel</a>
         </div>
 
     </form>
 </div>
-
-
 
 @stop
 

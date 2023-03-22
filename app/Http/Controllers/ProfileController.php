@@ -5,17 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class ProfileController extends Controller
 {
+
+    public function __construct()
+    {
+        $title = "Profile";
+        View::share('title', $title);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        
+    {
     }
 
     /**
@@ -59,8 +65,7 @@ class ProfileController extends Controller
     public function edit($id)
     {
         $data = Admin::find($id);
-        $user = 'Profile';
-        return view('super_admin.profile.index',compact('user','data'));
+        return view('super_admin.profile.index', compact('data'));
     }
 
     /**
@@ -79,29 +84,28 @@ class ProfileController extends Controller
             'email' => 'required',
         ]);
 
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
 
-            $old = 'profile/images/' . $user_id -> image;
-            if(File::exists($old)){
+            $old = 'profile/images/' . $user_id->image;
+            if (File::exists($old)) {
                 File::delete($old);
             }
             $file = $request->file('image');
-            $extension = $file -> getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move('profile/images/',$filename);
-            $user_id -> image = $filename;
+            $file->move('profile/images/', $filename);
+            $user_id->image = $filename;
         }
         $user = $validate;
 
         $user_id->fill($user);
 
-        if($user_id->isDirty()){
+        if ($user_id->isDirty()) {
             $user_id->save();
-            return redirect()->back()->with('message','Data updated Successfully');
+            return redirect()->back()->with('message', 'Data updated Successfully');
         }
-        
-        return redirect()->back()->with('fail-message','Data not Updated');
-        
+
+        return redirect()->back()->with('fail-message', 'Data not Updated');
     }
 
     /**

@@ -6,9 +6,16 @@ use Exception;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class StateController extends Controller
 {
+
+    public function __construct()
+    {
+        $title = "States";
+        View::share('title', $title);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +23,7 @@ class StateController extends Controller
      */
     public function index()
     {
-        $user = 'States';
-        return view('super_admin.states.index',compact('user'));
+        return view('super_admin.states.index');
     }
 
     public function dataTable()
@@ -32,8 +38,7 @@ class StateController extends Controller
      */
     public function create()
     {
-        $user = 'States';
-        return view('super_admin.states.create',compact('user'));
+        return view('super_admin.states.create');
     }
 
     /**
@@ -74,9 +79,7 @@ class StateController extends Controller
     public function edit($id)
     {
         $state = State::find($id);
-        $user = 'State';
-
-        return view('super_admin.states.edit', compact('state','user'));
+        return view('super_admin.states.edit', compact('state'));
     }
 
     /**

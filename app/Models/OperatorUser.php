@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Hash;
 
 class OperatorUser extends Authenticatable
@@ -57,5 +58,10 @@ class OperatorUser extends Authenticatable
         return Attribute::make(
             set: fn ($value) => Hash::make($value)
         );
+    }
+
+    public function cinemas(): HasManyThrough
+    {
+        return $this->hasManyThrough(Cinema::class, Operator::class, 'id', 'operator_id', 'operator_id');
     }
 }

@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\OperatorUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 
 class OperatorPasswordController extends Controller
 {
+    public function __construct()
+    {
+        $title = "Password";
+        View::share('title', $title);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -59,8 +65,7 @@ class OperatorPasswordController extends Controller
     public function edit($id)
     {
         $data = OperatorUser::find($id);
-        $user = 'Password';
-        return view('operator.password.index',compact('user','data'));
+        return view('operator.password.index',compact('data'));
     }
 
     /**

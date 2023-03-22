@@ -6,6 +6,8 @@
 
 
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
+
 
 <section class="content-header">
     <div class="container-fluid">
@@ -17,7 +19,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ url('admin/movies/' . $movie->id . '/edit') }}">Edit</a></li>
                     <li class="breadcrumb-item active"><a style="color:#6c757d" href="{{ route('movies.index') }}">Home</a></li>
-                    <li class="breadcrumb-item active">{{ $user }}</li>
+                    <li class="breadcrumb-item active">{{ $title }}</li>
                 </ol>
             </div>
         </div>
@@ -45,5 +47,17 @@
 @stop
 
 @section('js')
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>
+
 @include('super_admin.__jquery_validations')
+
+<script>
+    $(document).ready(function() {
+        $('#release_at').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            stepping: 15
+        });
+    });
+</script>
 @stop

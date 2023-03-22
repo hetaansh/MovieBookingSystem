@@ -17,8 +17,10 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('screen_id');
             $table->foreign('screen_id')
-              ->references('id')->on('screens');
-            $table->integer("price");
+                ->references('id')->on('screens');
+            $table->string('name');
+            $table->unsignedTinyInteger('row_id');
+            $table->unsignedTinyInteger('col_id');
             $table->timestamps();
         });
     }

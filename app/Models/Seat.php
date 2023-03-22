@@ -15,7 +15,7 @@ class Seat extends Model
         'price',
     ];
 
-    public function movie(): BelongsTo
+    public function screen(): BelongsTo
     {
         return $this->belongsTo(Screen::class, 'screen_id', 'id');
     }

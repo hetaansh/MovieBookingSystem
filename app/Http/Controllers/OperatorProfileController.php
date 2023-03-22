@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\OperatorUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class OperatorProfileController extends Controller
 {
+    public function __construct()
+    {
+        $title = "Profile";
+        View::share('title', $title);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -59,8 +65,7 @@ class OperatorProfileController extends Controller
     public function edit($id)
     {
         $data = OperatorUser::find($id);
-        $user = 'Profile';
-        return view('operator.profile.index',compact('user','data'));
+        return view('operator.profile.index',compact('data'));
     }
 
     /**

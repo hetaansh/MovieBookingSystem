@@ -8,9 +8,15 @@ use App\Models\OperatorUser;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\View;
 
 class OperatorUserController extends Controller
 { 
+    public function __construct()
+    {
+        $title = "Operator Users";
+        View::share('title', $title);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +24,7 @@ class OperatorUserController extends Controller
      */
     public function index()
     {
-        $user = 'Operator Users';
-        return view('super_admin.operator_users.index', compact('user'));
+        return view('super_admin.operator_users.index');
     }
 
     public function dataTable()
@@ -34,9 +39,8 @@ class OperatorUserController extends Controller
      */
     public function create()
     {   
-        $user = 'Operator Users';
         $operators = Operator::pluck('name','id')->all();
-        return view('super_admin.operator_users.create',compact('operators','user'));
+        return view('super_admin.operator_users.create',compact('operators'));
     }
 
     /**
@@ -82,13 +86,12 @@ class OperatorUserController extends Controller
     {
         $operator_user = OperatorUser::find($id);
         $operators = Operator::pluck('name','id')->all();
-        $user = 'Operator Users';
         // $user = auth()->user()->name;
         // if($operator_users -> name === $user){
         //     return redirect() -> route('operatorUsers.index');
         // };
 
-        return view('super_admin.operator_users.edit', compact('operator_user','operators','user'));
+        return view('super_admin.operator_users.edit', compact('operator_user','operators'));
     }
 
     /**
