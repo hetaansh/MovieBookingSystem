@@ -30,9 +30,8 @@ class ShowController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id = 1)
     {
-        
         return view('operator.shows.index');
     }
 
@@ -183,18 +182,33 @@ class ShowController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'price' => 'required|max:4',
             'start_at' => 'required',
-            'end_at' => 'required',
+            'end_at' => '',
         ]);
 
         try {
+            $shows = DB::table('shows')
+            ->join('screens', 'shows.screen_id', '=', 'screens.id')
+            ->join('cinemas', 'screens.cinema_id', '=', 'cinemas.id')
+            ->join('movies', 'shows.movie_id', '=', 'movies.id')
+            ->where('cinemas.operator_id', '=', Auth::user()->operator_id)
+            ->pluck('shows.start_at')->toArray();
+    
+            foreach($shows as $show_start_at){
+    
+                if($validated['start_at'] == $show_start_at){
+                    // dd('same data');
+                    return redirect()->route('shows.edit', $id)->with('fail-message', 'Show available in same time.');
+                }
+            }
+
             $show = Show::withWhereHas('screen.cinema', function ($query) {
                 $query->where('operator_id', Auth::user()->operator_id)->select('id', 'name');
             })->with('movie:id,name,duration,release_at')->findOrFail($id);
 
-            $show->fill($request->all());
+            $show->fill($validated);
 
             if ($show->isDirty()) {
                 $show->save();

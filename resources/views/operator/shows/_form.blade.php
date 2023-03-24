@@ -13,7 +13,7 @@
         <label for="screen_id" class="col-sm-2 col-form-label">Screens</label>
         <div class="col-sm-10">
             <x-adminlte-select2 name="screen_id" id="screen_id" required :config="['disabled'=> isset($show) ? true : false]">
-                <x-adminlte-options :options="(isset($show) ? $screens : "" ) :selected="(isset($show) ? $show->screen_id : null)" placeholder="-- Select Screen --" />
+                <x-adminlte-options :options="(isset($screens) ? $screens : '' )" :selected="(isset($show) ? $show->screen_id : null)"  placeholder="-- Select Screen --" />
             </x-adminlte-select2>
         </div>
     </div>
@@ -79,9 +79,11 @@
                 <div class="input-group-append" data-target="#end_at" data-toggle="datetimepicker">
                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
+                <div>
                 @error('end_at')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror
+                </div>
             </div>
         </div>
     </div>
