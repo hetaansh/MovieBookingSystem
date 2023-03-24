@@ -6,17 +6,22 @@ use App\Models\Cinema;
 use App\Models\Movie;
 use App\Models\Screen;
 use App\Models\Show;
+use Exception;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
+
+
 
 class ShowController extends Controller
 {
 
     public function __construct()
-    {
+    {   
         $title = "Shows";
         View::share('title', $title);
     }
@@ -27,13 +32,24 @@ class ShowController extends Controller
      */
     public function index()
     {
-       
+        
         return view('operator.shows.index');
     }
 
     public function dataTable()
     {
-        return Datatables::of(Auth::user()->operator->screens()->with('shows'))->make(true);
+        $query = DB::table('shows')
+            ->join('screens', 'shows.screen_id', '=', 'screens.id')
+            ->join('cinemas', 'screens.cinema_id', '=', 'cinemas.id')
+            ->join('movies', 'shows.movie_id', '=', 'movies.id')
+            ->where('cinemas.operator_id', '=', Auth::user()->operator_id)
+            ->select('cinemas.name as cinema_name', 'screens.name as screen_name', 'movies.name as movie_name', 'shows.price', 'shows.start_at', 'shows.end_at', 'shows.id');
+
+        // $query = Show::withWhereHas('screen.cinema', function ($query) {
+        //     $query->where('operator_id', Auth::user()->operator_id)->select('id','name');
+        // })->with('movie:id,name');
+
+        return Datatables::of($query)->make(true);
     }
 
     public function getScreen(Request $request)
@@ -88,7 +104,23 @@ class ShowController extends Controller
             ]
         );
 
-        Show::create($validated);
+        $show = DB::table('shows')
+        ->join('screens', 'shows.screen_id', '=', 'screens.id')
+        ->join('cinemas', 'screens.cinema_id', '=', 'cinemas.id')
+        ->join('movies', 'shows.movie_id', '=', 'movies.id')
+        ->where('cinemas.operator_id', '=', Auth::user()->operator_id)
+        ->pluck('shows.start_at')->toArray();
+
+        foreach($show as $show_start_at){
+
+            if($validated['start_at'] == $show_start_at){
+                // dd('same data');
+                return redirect()->back();
+            }
+        }
+        // dd('not same data');
+    
+        Show::withWhereHas('screen.cinema')->create($validated);
 
         return redirect()->route('shows.index')->with('message', 'Data added Successfully');
     }
@@ -113,11 +145,30 @@ class ShowController extends Controller
     public function edit($id)
     {
         try {
-           $show = Show::findOrFail($id);
+            // $show = DB::table('shows')
+            // ->join('screens', 'shows.screen_id', '=', 'screens.id')
+            // ->join('cinemas', 'screens.cinema_id', '=', 'cinemas.id')
+            // ->join('movies', 'shows.movie_id', '=', 'movies.id')
+            // ->where('cinemas.operator_id', '=', Auth::user()->operator_id)
+            // ->select('cinemas.name as cinema_name', 'screens.name as screen_name', 'movies.name as movie_name', 'shows.price', 'shows.start_at', 'shows.end_at', 'shows.id');
+            
+            $show = Show::withWhereHas('screen.cinema', function ($query) {
+                $query->where('operator_id', Auth::user()->operator_id)->select('id', 'name');
+            })->with('movie:id,name,duration,release_at')->findOrFail($id);
+            
             $cinemas = Auth::user()->operator->cinemas()->pluck('name', 'id')->all();
+           
+        
+            $screens = Screen::pluck('name', 'id')->all();
             $movies = Movie::pluck('name', 'id')->all();
-            $screen = Auth::user()->operator->screens();
-            return view('operator.shows.edit', compact('screen', 'cinemas','movies','show'));
+
+
+            // $movie = DB::table('shows')
+            // ->join('movies', 'shows.movie_id', '=', 'movies.id')
+            // ->where('shows.id', '=', '1')
+            // ->select('movies.duration as movie_duration', 'movies.release_at', 'shows.id')->get();
+
+            return view('operator.shows.edit', compact('cinemas', 'movies', 'screens', 'show'));
         } catch (Exception $e) {
             return redirect()->route('screens.index');
         }
@@ -132,7 +183,28 @@ class ShowController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'price' => 'required|max:4',
+            'start_at' => 'required',
+            'end_at' => 'required',
+        ]);
+
+        try {
+            $show = Show::withWhereHas('screen.cinema', function ($query) {
+                $query->where('operator_id', Auth::user()->operator_id)->select('id', 'name');
+            })->with('movie:id,name,duration,release_at')->findOrFail($id);
+
+            $show->fill($request->all());
+
+            if ($show->isDirty()) {
+                $show->save();
+                return redirect()->route('shows.index')->with('message', 'Data updated Successfully');
+            }
+
+            return redirect()->route('shows.index')->with('fail-message', 'Data not Updated');
+        } catch (Exception $e) {
+            return redirect()->route('shows.index');
+        }
     }
 
     /**
@@ -143,6 +215,11 @@ class ShowController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Show::find($id)->delete();
+            return 'Show has been deleted!';
+        } catch (Exception $e) {
+            return response('Contact Support!', 400);
+        }
     }
 }

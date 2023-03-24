@@ -98,29 +98,29 @@
             columns: [
                                 
                 {
-                    data: 'shows.price',
+                    data: 'cinema_name',
+                    name: 'cinemas.name'
+                },
+                {
+                    data: 'screen_name',
+                    name: 'screens.name'
+                },
+                {
+                    data: 'movie_name',
+                    name: 'movies.name'
+                },
+                {
+                    data: 'price',
                     name: 'price'
                 },
                 {
-                    data: 'shows.starts_at',
-                    name: 'shows.starts_at'
-                },
-                {
-                    data: 'shows.ends_at',
-                    name: 'shows.ends_at'
-                },
-                {
-                    data: 'screens.name',
-                    name: 'screens.name'
-                },
-                {
-                    data: 'screens.name',
-                    name: 'screens.name'
+                    data: 'start_at',
+                    name: 'start_at'
                 },
 
                 {
-                    data: 'movie.name',
-                    name: 'movie.name'
+                    data: 'end_at',
+                    name: 'end_at'
                 },
                 {
                     data: function(row) {

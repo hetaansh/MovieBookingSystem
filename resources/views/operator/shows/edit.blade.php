@@ -52,58 +52,62 @@
 @include('super_admin.__jquery_validations')
 
 <script>
-    $(document).ready(function() {
-        $('#cinema_id').change(function() {
-            let cinema_id = $(this).val();
-            if (cinema_id != '') {
-                $.ajax({
-                    url: 'getScreen',
-                    type: 'post',
-                    data: 'cinema_id=' + cinema_id + '&_token={{csrf_token()}}',
-                    success: function(result) {
-                        $('#screen_id').html('<option value="">-- Select Screen --</option>');
-                        $.each(result, function(key, value) {
-                            $("#screen_id").append('<option value="' + value
-                                .id + '">' + value.name + '</option>');
-                        });
+    // $(document).ready(function() {
+    //     $('#cinema_id').change(function() {
+    //         let cinema_id = $(this).val();
+    //         if (cinema_id != '') {
+    //             $.ajax({
+    //                 url: 'getScreen',
+    //                 type: 'post',
+    //                 data: 'cinema_id=' + cinema_id + '&_token={{csrf_token()}}',
+    //                 success: function(result) {
+    //                     $('#screen_id').html('<option value="">-- Select Screen --</option>');
+    //                     $.each(result, function(key, value) {
+    //                         $("#screen_id").append('<option value="' + value
+    //                             .id + '">' + value.name + '</option>');
+    //                     });
 
-                    }
-                });
-            } else {
-                $('#screen_id').html('<option value="">-- Select Cinema --</option>');
-            }
-        });
+    //                 }
+    //             });
+    //         } else {
+    //             $('#screen_id').html('<option value="">-- Select Cinema --</option>');
+    //         }
+    //     });
 
-        $('#movie_id').change(function() {
-            let movie_id = $(this).val();
-            if (movie_id != '') {
-                $.ajax({
-                    url: 'getMovie',
-                    type: 'post',
-                    data: 'movie_id=' + movie_id + '&_token={{csrf_token()}}',
-                    success: function(result) {
-                        $('#duration').val(result.duration);
-                        $('#release_at').val(result.release_at);
-                        $('#start_at').datetimepicker('minDate', moment(result.release_at));
-                    }
-                });
-            }
-        });
+        // $('#movie_id').change(function() {
+        //     let movie_id = $(this).val();+
+        //     if (movie_id != '') {
+        //         $.ajax({
+        //             url: 'getMovie',
+        //             type: 'post',
+        //             data: 'movie_id=' + movie_id + '&_token={{csrf_token()}}',
+        //             success: function(result) {
+        //                 $('#duration').val(result.duration);
+        //                 $('#release_at').val(result.release_at);    
+        //             }
+        //         });
+        //     }
+        // });
+
+        let release_date = $('#release_at').val();
+        
 
         $('#start_at').on('change.datetimepicker', function(e) {
             $('#end_at').datetimepicker('date', moment(e.date).add($('#duration').val(), 'minutes'));
         });
 
-        $('#cinema_id').change();
+        // $('#cinema_id').change();
 
-        $('#start_at').datetimepicker({
+        $('#end_at').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             stepping: 15
         });
-        $('#end_at').datetimepicker({
+        $('#start_at').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
-            readonly: true
+            stepping: 15,
         });
+        $('#start_at').datetimepicker('minDate', moment(release_date));
+        
 
     });
 </script>
