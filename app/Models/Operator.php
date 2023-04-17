@@ -42,8 +42,14 @@ class Operator extends Model
         return $this->hasManyThrough(Screen::class, Cinema::class, 'operator_id', 'cinema_id', 'id');
     }
 
+    public function seats(): HasManyThrough
+    {
+        return $this->hasManyThrough(Seat::class, Screen::class, 'cinema_id', 'screen_id', 'id');
+    }
+
     public function shows(): HasManyThrough
     {
-        return $this->hasManyThrough();
+        return $this->hasManyThrough(Show::class, Screen::class, 'cinema_id', 'screen_id', 'id');
     }
+
 }

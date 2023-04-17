@@ -20,6 +20,7 @@ class ScreenController extends Controller
         $title = "Screen";
         View::share('title', $title);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +50,7 @@ class ScreenController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -58,15 +59,34 @@ class ScreenController extends Controller
             [
                 'name' => 'required|max:50',
                 'cinema_id' => 'required',
-                'rows' => 'required|max:3',
-                'cols' => 'required|max:3',
+                'rows' => 'required|numeric|between:1,26',
+                'cols' => 'required|numeric|between:1,100',
             ],
             [
                 'cinema_id.required' => 'Cinema must be selected.',
             ]
         );
 
-        Auth::user()->operator->screens()->with('cinema')->create($validated);
+
+        $screen = Auth::user()->operator->screens()->with('cinema')->create($validated);
+
+
+        $rows = $validated['rows'];
+        $cols = $validated['cols'];
+        $letter = 'A';
+
+        for ($row = 1; $row <= $rows; $row++) {
+            for ($col = 1; $col <= $cols; $col++) {
+                Auth::user()->operator->seats()->create([
+                    'name' => $letter . ' ' . $col,
+                    'row_id' => $row,
+                    'col_id' => $col,
+                    'screen_id' => $screen->id,
+                ]);
+            }
+            $letter++;
+        }
+
 
         return redirect()->route('screens.index')->with('message', 'Data added Successfully');
     }
@@ -74,10 +94,11 @@ class ScreenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public
+    function show($id)
     {
         //
     }
@@ -85,10 +106,11 @@ class ScreenController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         try {
             $screen = Auth::user()->operator->screens()->with('cinema')->findOrFail($id);
@@ -102,16 +124,15 @@ class ScreenController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public
+    function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|max:50',
-            'rows' => 'required|max:3',
-            'cols' => 'required|max:3',
         ]);
 
         try {
@@ -133,10 +154,11 @@ class ScreenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         try {
             Screen::find($id)->delete();

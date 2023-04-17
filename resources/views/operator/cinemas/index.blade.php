@@ -110,7 +110,7 @@
                 },
                 {
                     data: function(row) {
-                        return '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit" href="cinemas/' + row.id + '/edit" value="' + row.id + '"> ' + '<i class="fa fa-lg fa-fw fa-pen"></i>' + '</a>' +
+                        return '<a class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit" href="cinemas/' + row.id + '/edit" value="' + row.id + '"> ' + '<i class="fa fa-pencil"></i>' + '</a>' +
                             '<a class="button btn btn-xs btn-default text-primary mx-1 shadow" title="Delete" data-id="' + row.id + '"> ' + '<i class="fa fa-lg fa-fw fa-trash"></i>' + '</a>'
                     },
                     name: 'id',

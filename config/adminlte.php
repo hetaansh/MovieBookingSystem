@@ -289,7 +289,7 @@ return [
     |
     */
 
-    
+
     'menu' => [
         // Navbar items:
         // [
@@ -371,16 +371,16 @@ return [
         ],
         [
             'text'    => 'Seats',
-            'icon'    => 'fa fa-map-marker',
+            'icon'    => 'fa fa-window-restore',
             'can'     => 'isOperator',
             'url'  => 'operator/seats',
             'active' => ['operator/seats*']
         ],
         [
-            'text'    => 'Tickets',
-            'icon'    => 'fa fa-map-marker',
+            'text'    => 'Booking',
+            'icon'    => 'fa fa-list-alt',
             'can'     => 'isOperator',
-            'url'  => 'operator/tickets',
+            'url'  => 'operator/bookings',
             'active' => ['operator/tickets*']
         ],
     ],

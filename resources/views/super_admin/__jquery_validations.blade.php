@@ -2,7 +2,6 @@
 <script>
     $('form').each(function(index, value) {
         if ($(this).data('validate') == true) {
-            console.log('Validation activated');
             $(this).validate({
                 errorElement: 'div',
                 errorPlacement: function(error, element) {
@@ -18,4 +17,31 @@
             });
         }
     });
+
+    // $('form').each(function(index, value) {
+    //     if ($(this).data('validate-remote') == true) {
+    //         let start_at = $('#start_at').val();
+    //         let end_at = $('#end_at').val();
+    //         console.log(start_at, end_at);
+    //         console.log('hello');
+    //         $(this).validate({
+    //             rules: {
+    //                 start_at: {
+    //                     required: true,
+    //                     remote: {
+    //                         url: "isShowAvailable",
+    //                         type: "post",
+    //                         data: 'start_at=' + start_at + '&end_at=' + end_at + '&_token={{csrf_token()}}',
+    //                         messages: {
+    //                             start_at: {
+    //                                 remote: "Show exist"
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //     }
+    // });
+
 </script>

@@ -33,7 +33,7 @@
     </div>
 
 
-    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('shows.store') }}" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal" data-validate="true" data-validate-remote="true" novalidate action="{{ route('shows.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         @include('operator.shows._form')
@@ -92,20 +92,42 @@
             }
         });
 
+        // $('#start_at').change(function() {
+        //     let start_at = $(this).val();
+        //     if (start_at != '') {
+        //         $.ajax({
+        //             url: "isShowAvailable",
+        //             type: "post",
+        //             data: 'start_at=' + start_at + '&end_at=' + end_at + '&_token={{csrf_token()}}',
+        //             success: function(result) {
+        //                 console.log('hello');
+        //             }
+        //         });
+        //     }
+        // });
+
+
+
+
+
+
+
         $('#start_at').on('change.datetimepicker', function(e) {
             $('#end_at').datetimepicker('date', moment(e.date).add($('#duration').val(), 'minutes'));
         });
 
         $('#cinema_id').change();
 
-        $('#start_at').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            stepping: 15
-        });
         $('#end_at').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             readonly: true
         });
+
+        $('#start_at').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            stepping: 15
+        });
+
 
     });
 </script>

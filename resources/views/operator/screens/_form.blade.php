@@ -12,8 +12,8 @@
         <label for="cinema_id" class="col-sm-2 col-form-label">Cinema</label>
         <div class="col-sm-10">
             <x-adminlte-select2 name="cinema_id" id="cinema_id" required :config="['disabled'=> isset($screen) ? true : false]">
-                <x-adminlte-options 
-                :options="$cinemas" 
+                <x-adminlte-options
+                :options="$cinemas"
                 :selected="(isset($screen)? $screen->cinema_id : null)"
                 placeholder="-- Select Cinema --" />
             </x-adminlte-select2>
@@ -23,7 +23,7 @@
     <div class="form-group row">
         <label for="rows" class="col-sm-2 col-form-label">Rows</label>
         <div class="col-sm-10">
-            <input type="number" class="form-control @error('rows') is-invalid @enderror" id="rows" name="rows" placeholder="Enter Rows" value="{{ old('rows', isset($screen) ? $screen->rows : "") }}" required data-rule-maxlength='3'>
+            <input type="number" class="form-control @error('rows') is-invalid @enderror" id="rows" name="rows" placeholder="Enter Rows" value="{{ old('rows', isset($screen) ? $screen->rows : "") }}" {{ isset($screen) ? 'disabled' : '' }} required data-rule-maxlength='2'>
             @error('rows')
             <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -32,7 +32,7 @@
     <div class="form-group row">
         <label for="cols" class="col-sm-2 col-form-label">Columns</label>
         <div class="col-sm-10">
-            <input type="number" class="form-control @error('cols') is-invalid @enderror" id="cols" name="cols" placeholder="Enter Columns" value="{{ old('cols', isset($screen) ? $screen->cols : "") }}" required data-rule-maxlength='3'>
+            <input type="number" class="form-control @error('cols') is-invalid @enderror" id="cols" name="cols" placeholder="Enter Columns" value="{{ old('cols', isset($screen) ? $screen->cols : "") }}" {{ isset($screen) ? 'disabled' : '' }} required data-rule-maxlength='2'>
             @error('cols')
             <div class="text-danger">{{ $message }}</div>
             @enderror

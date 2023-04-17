@@ -11,8 +11,10 @@ class Seat extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
         'screen_id',
-        'price',
+        'row_id',
+        'col_id',
     ];
 
     public function screen(): BelongsTo
