@@ -9,7 +9,7 @@
     <style>
         tr td {
             width: 32px;
-            height: 30px;
+            height: 1.9rem;
             text-align: center;
             border: solid;
             border-width: thin;
@@ -17,7 +17,6 @@
         }
 
         table {
-
             padding-bottom: 20px;
             padding-top: 20px;
             border-collapse: separate;
@@ -140,7 +139,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 @stop

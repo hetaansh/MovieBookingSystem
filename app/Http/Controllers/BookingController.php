@@ -18,6 +18,7 @@ class BookingController extends Controller
         $title = "Bookings";
         View::share('title', $title);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,23 +29,6 @@ class BookingController extends Controller
         return view('operator.bookings.index');
     }
 
-
-    public function getScreen(Request $request)
-    {
-        $cinema_id = $request->post('cinema_id');
-        $cinema = Auth::user()->operator->cinemas()->find($cinema_id);
-        $data = Screen::where("cinema_id", $cinema->id)
-            ->get(["name", "id"]);
-
-        return response()->json($data);
-    }
-
-    public function getMovie(Request $request)
-    {
-        $movie_id = $request->post('movie_id');
-        $data = Movie::find($movie_id);
-        return response()->json($data);
-    }
 
     public function dataTable()
     {
@@ -77,7 +61,7 @@ class BookingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -88,7 +72,7 @@ class BookingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -99,7 +83,7 @@ class BookingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -110,8 +94,8 @@ class BookingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -122,7 +106,7 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

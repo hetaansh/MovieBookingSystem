@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
 use App\Models\Screen;
+use App\Models\Show;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -14,6 +16,18 @@ class SeatController extends Controller
     {
         $title = "Seats";
         View::share('title', $title);
+    }
+
+    public function getShows(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $screen_id = $request->post('screen_id');
+        $screen = Auth::user()->operator->screens->find($screen_id);
+        $movie_id = $request->post('movie_id');
+        $movie = Movie::find($movie_id);
+        $data = Show::where([["screen_id", $screen->id],["movie_id", $movie->id]])
+            ->get(["start_at", "end_at", "id"]);
+
+        return response()->json($data);
     }
 
     public function getSeats(Request $request)
@@ -32,6 +46,7 @@ class SeatController extends Controller
 
         return response()->json($data);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +55,8 @@ class SeatController extends Controller
     public function index()
     {
         $cinemas = Auth::user()->operator->cinemas()->pluck('name', 'id')->all();
-        return view('operator.seats.index',compact('cinemas'));
+        $movies = Movie::pluck('name', 'id')->all();
+        return view('operator.seats.index', compact('cinemas', 'movies'));
     }
 
 //    /**

@@ -1,0 +1,29 @@
+<div class="col-md-12" style="margin-top: 100px">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">Screen</h3>
+        </div>
+        <div class="card-body p-0" style="background-color: whitesmoke">
+            <div class="bs-stepper linear">
+                <div class="bs-stepper-header" role="tablist">
+                    <div id="section">
+
+                        <div id="screen_section">
+                        </div>
+
+                        <div class="flex-container">
+                            <div id="index">
+                            </div>
+
+                            <table id="seats_formation">
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
