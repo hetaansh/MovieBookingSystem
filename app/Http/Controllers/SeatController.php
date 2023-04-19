@@ -56,7 +56,12 @@ class SeatController extends Controller
     {
         $cinemas = Auth::user()->operator->cinemas()->pluck('name', 'id')->all();
         $movies = Movie::pluck('name', 'id')->all();
-        return view('operator.seats.index', compact('cinemas', 'movies'));
+        $ticketCount = array();
+        for ($i = 1 ; $i <= 10; $i++){
+            array_push($ticketCount,$i);
+        }
+
+        return view('operator.seats.index', compact('cinemas', 'movies', 'ticketCount'));
     }
 
 //    /**

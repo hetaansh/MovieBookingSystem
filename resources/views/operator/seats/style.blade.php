@@ -48,4 +48,9 @@
         /*border-width: thin;*/
         /*background-color: white;*/
     }
+
+    html {
+        scroll-behavior: auto|smooth|initial|inherit;
+    }
+
 </style>
