@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedTinyInteger('row_id');
             $table->unsignedTinyInteger('col_id');
+            $table->boolean('selected')->default(0);
             $table->timestamps();
         });
     }

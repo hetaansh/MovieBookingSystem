@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bookings;
 use App\Models\Movie;
 use App\Models\Screen;
+use App\Models\Seat;
 use App\Models\Show;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
 class SeatController extends Controller
@@ -24,8 +27,8 @@ class SeatController extends Controller
         $screen = Auth::user()->operator->screens->find($screen_id);
         $movie_id = $request->post('movie_id');
         $movie = Movie::find($movie_id);
-        $data = Show::where([["screen_id", $screen->id],["movie_id", $movie->id]])
-            ->get(["start_at", "end_at", "id"]);
+        $data = Show::where([["screen_id", $screen->id], ["movie_id", $movie->id]])
+            ->get(["start_at", "end_at", "id", "price"]);
 
         return response()->json($data);
     }
@@ -47,6 +50,57 @@ class SeatController extends Controller
         return response()->json($data);
     }
 
+    public function getTickets(Request $request)
+    {
+        $name = $request->post('name');
+        $amount = $request->post('amount');
+        $cinema_id = $request->post('cinema_id');
+        $screen_id = $request->post('screen_id');
+        $movie_id = $request->post('movie_id');
+        $show_id = $request->post('show_id');
+        $seats = $request->post('seat_array');
+
+//        $seats_array = explode(",", $seats);
+//        $count = count($seats_array);
+//
+//        for ($i = 0; $i < $count; $i++) {
+//            DB::table('seats')
+//                ->where([
+//                    ['screen_id', $screen_id],
+//                    ['name', $seats_array[$i]],
+//                ])->update([
+//                    'selected' => 1
+//                ]);
+//        }
+
+        Bookings::create([
+            'name' => $name,
+            'amount' => $amount,
+            'cinema_id' => $cinema_id,
+            'show_id' => $show_id,
+            'screen_id' => $screen_id,
+            'movie_id' => $movie_id,
+            'seat_array' => $seats,
+        ]);
+    }
+
+    public function getSelectedTickets(Request $request)
+    {
+        $screen_id = $request->post('screen_id');
+        $show_id = $request->post('show_id');
+
+
+        $data = Bookings::select(DB::raw('group_concat(seat_array)'))
+            ->where([
+                ['screen_id', $screen_id],
+                ['show_id', $show_id],
+            ])->get();
+
+//        $seats_array = explode(",", $data);
+
+        return response()->json($data);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -57,8 +111,8 @@ class SeatController extends Controller
         $cinemas = Auth::user()->operator->cinemas()->pluck('name', 'id')->all();
         $movies = Movie::pluck('name', 'id')->all();
         $ticketCount = array();
-        for ($i = 1 ; $i <= 10; $i++){
-            array_push($ticketCount,$i);
+        for ($i = 1; $i <= 10; $i++) {
+            array_push($ticketCount, $i);
         }
 
         return view('operator.seats.index', compact('cinemas', 'movies', 'ticketCount'));

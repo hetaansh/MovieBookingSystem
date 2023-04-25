@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -16,9 +15,20 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('seat_id');
-            $table->foreign('seat_id')
-                ->references('id')->on('seats')->onDelete('cascade');
+            $table->integer('amount');
+            $table->unsignedInteger('cinema_id');
+            $table->foreign('cinema_id')
+                ->references('id')->on('cinemas');
+            $table->unsignedInteger('movie_id');
+            $table->foreign('movie_id')
+                ->references('id')->on('movies');
+            $table->unsignedInteger('screen_id');
+            $table->foreign('screen_id')
+                ->references('id')->on('screens');
+            $table->unsignedInteger('show_id');
+            $table->foreign('show_id')
+                ->references('id')->on('shows');
+            $table->string('seat_array');
             $table->timestamps();
         });
     }

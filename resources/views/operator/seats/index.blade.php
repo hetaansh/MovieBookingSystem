@@ -14,6 +14,7 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
         @include('operator.seats.style')
 
     </head>
@@ -45,9 +46,21 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <form action="">
+                            <form action="{{ route('bookings.store') }}">
                                 @csrf
 
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                               id="name" name="name" placeholder="Enter Name"
+                                               required
+                                               data-rule-maxlength='50'>
+                                        @error('name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label for="cinema_id" class="col-sm-2 col-form-label">Cinema</label>
                                     <div class="col-sm-10">
@@ -96,6 +109,18 @@
                                             <x-adminlte-options :options="$ticketCount"
                                                                 placeholder="-- Total Tickets --"/>
                                         </x-adminlte-select2>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="demo" class="col-sm-2 col-form-label">demo</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control @error('demo') is-invalid @enderror"
+                                               id="demo" name="demo" placeholder="Enter demo"
+                                               required
+                                               data-rule-maxlength='50'>
+                                        @error('demo')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </form>

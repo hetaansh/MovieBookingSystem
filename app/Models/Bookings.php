@@ -10,6 +10,12 @@ class Bookings extends Model
     use HasFactory;
 
     protected $fillable = [
-        'seat_id'
+        'name',
+        'amount',
+        'cinema_id',
+        'movie_id',
+        'screen_id',
+        'show_id',
+        'seat_array',
     ];
 }

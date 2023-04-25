@@ -30,22 +30,6 @@ class BookingController extends Controller
     }
 
 
-    public function dataTable()
-    {
-        $query = DB::table('bookings')
-            ->join('seats', 'seats.seat_id', '=', 'seat.id')
-            ->join('screens', 'seats.screen_id', '=', 'screens.id')
-            ->join('cinemas', 'screens.cinema_id', '=', 'cinemas.id')
-            ->where('cinemas.operator_id', '=', Auth::user()->operator_id)
-            ->select('cinemas.name as cinema_name', 'screens.name as screen_name', 'movies.name as movie_name', 'shows.price', 'shows.start_at', 'shows.end_at', 'shows.id');
-
-        // $query = Show::withWhereHas('screen.cinema', function ($query) {
-        //     $query->where('operator_id', Auth::user()->operator_id)->select('id','name');
-        // })->with('movie:id,name');
-
-        return Datatables::of($query)->make(true);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -66,7 +50,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

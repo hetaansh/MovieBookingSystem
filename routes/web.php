@@ -113,9 +113,13 @@ Route::get('operator/shows/datatable', [ShowController::class, 'datatable'])->mi
 Route::resource('operator/shows', ShowController::class)->middleware('auth:operator');
 
 Route::resource('operator/seats', SeatController::class)->middleware('auth:operator');
+Route::post('operator/seats/getSelectedTickets', [SeatController::class, 'getSelectedTickets'])->middleware('auth:operator')->name('seats.getSelectedTickets');
+Route::post('operator/seats/getTickets', [SeatController::class, 'getTickets'])->middleware('auth:operator')->name('seats.getTickets');
 Route::post('operator/seats/getScreen', [SeatController::class, 'getScreen'])->middleware('auth:operator')->name('seats.getScreen');
 Route::post('operator/seats/getSeats', [SeatController::class, 'getSeats'])->middleware('auth:operator')->name('seats.getSeat');
 Route::post('operator/seats/getShows', [SeatController::class, 'getShows'])->middleware('auth:operator')->name('seats.getShow');
+
+
 
 
 Route::get('operator/bookings/datatable', [BookingController::class, 'datatable'])->middleware('auth:operator')->name('bookings.datatable');

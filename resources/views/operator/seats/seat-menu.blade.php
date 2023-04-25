@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" id="book_submit" class="btn btn-primary">Submit</button>
                         <a class="btn btn-default float-right" href="{{route('seats.index')}}">Cancel</a>
                     </div>
                 </div>

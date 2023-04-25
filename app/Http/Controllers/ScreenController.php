@@ -70,22 +70,22 @@ class ScreenController extends Controller
 
         $screen = Auth::user()->operator->screens()->with('cinema')->create($validated);
 
-
-        $rows = $validated['rows'];
-        $cols = $validated['cols'];
-        $letter = 'A';
-
-        for ($row = 1; $row <= $rows; $row++) {
-            for ($col = 1; $col <= $cols; $col++) {
-                Auth::user()->operator->seats()->create([
-                    'name' => $letter . ' ' . $col,
-                    'row_id' => $row,
-                    'col_id' => $col,
-                    'screen_id' => $screen->id,
-                ]);
-            }
-            $letter++;
-        }
+//
+//        $rows = $validated['rows'];
+//        $cols = $validated['cols'];
+//        $letter = 'A';
+//
+//        for ($row = 1; $row <= $rows; $row++) {
+//            for ($col = 1; $col <= $cols; $col++) {
+//                Auth::user()->operator->seats()->create([
+//                    'name' => $letter . ' ' . $col,
+//                    'row_id' => $row,
+//                    'col_id' => $col,
+//                    'screen_id' => $screen->id,
+//                ]);
+//            }
+//            $letter++;
+//        }
 
 
         return redirect()->route('screens.index')->with('message', 'Data added Successfully');

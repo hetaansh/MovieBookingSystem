@@ -11,7 +11,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\View;
 
 class OperatorUserController extends Controller
-{ 
+{
     public function __construct()
     {
         $title = "Operator Users";
@@ -38,7 +38,7 @@ class OperatorUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         $operators = Operator::pluck('name','id')->all();
         return view('super_admin.operator_users.create',compact('operators'));
     }
@@ -72,10 +72,7 @@ class OperatorUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
 
-    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -102,7 +99,7 @@ class OperatorUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request)
-    {   
+    {
 
         $validated = $request->validate([
             'name' => 'required|max:50',
@@ -112,7 +109,7 @@ class OperatorUserController extends Controller
 
         $operator_user = OperatorUser::find($id);
         $operator_user->fill($validated)->save();
-     
+
         return redirect()->route('operatorUsers.index')->with('message','Data updated Successfully');
     }
 

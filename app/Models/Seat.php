@@ -15,6 +15,7 @@ class Seat extends Model
         'screen_id',
         'row_id',
         'col_id',
+        'selected'
     ];
 
     public function screen(): BelongsTo

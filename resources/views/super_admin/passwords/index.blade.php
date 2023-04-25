@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{{ $user }}</h1>
+                    <h1>{{ $title }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -39,7 +39,7 @@
     <div class="card-header">
         <h3 class="card-title">Update Password</h3>
     </div>
-    
+
     <form class="form-horizontal" data-validate="true" novalidate action="{{ route('passwords.update', Auth::id()) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -53,7 +53,7 @@
 
     </form>
 
-    
+
 </body>
 
 

@@ -129,6 +129,8 @@ class ShowController extends Controller
             ]
         );
 
+
+
         $cinema = Auth::user()->operator->cinemas()->findOrFail($request->cinema_id);
         $screen = $cinema->screens()->findOrFail($request->screen_id);
 
@@ -147,7 +149,7 @@ class ShowController extends Controller
             ->count();
 
         if ($show_count == 0) {
-            $show = $screen->shows()->create($validated);
+            $screen->shows()->create($validated);
         } else {
             return back()->withInput($request->input())->withErrors(['start_at' => 'Show exist']);
         }
