@@ -20,7 +20,7 @@ return new class extends Migration
         ->references('id')->on('screens');
       $table->unsignedInteger('movie_id');
       $table->foreign('movie_id')
-        ->references('id')->on('movies');
+        ->references('id')->on('movies')->onDelete('cascade');
       $table->unsignedFloat('price');
       $table->dateTime('start_at');
       $table->dateTime('end_at');

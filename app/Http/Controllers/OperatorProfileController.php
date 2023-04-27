@@ -14,14 +14,15 @@ class OperatorProfileController extends Controller
         $title = "Profile";
         View::share('title', $title);
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        
+    {
+
     }
 
     /**
@@ -37,7 +38,7 @@ class OperatorProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,7 +49,7 @@ class OperatorProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -59,20 +60,20 @@ class OperatorProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $data = OperatorUser::find($id);
-        return view('operator.profile.index',compact('data'));
+        return view('operator.profile.index', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -84,35 +85,35 @@ class OperatorProfileController extends Controller
             'email' => 'required',
         ]);
 
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
 
-            $old = 'profile/images/' . $user_id -> image;
-            if(File::exists($old)){
+            $old = 'profile/images/' . $user_id->image;
+            if (File::exists($old)) {
                 File::delete($old);
             }
             $file = $request->file('image');
-            $extension = $file -> getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move('profile/images/',$filename);
-            $user_id -> image = $filename;
+            $file->move('profile/images/', $filename);
+            $user_id->image = $filename;
         }
         $user = $validate;
-        
+
         $user_id->fill($user);
 
-        if($user_id->isDirty()){
+        if ($user_id->isDirty()) {
             $user_id->save();
-            return redirect()->back()->with('message','Data updated Successfully');
+            return redirect()->back()->with('message', 'Data updated Successfully');
         }
-        
-        return redirect()->back()->with('fail-message','Data not Updated');
-        
+
+        return redirect()->back()->with('fail-message', 'Data not Updated');
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

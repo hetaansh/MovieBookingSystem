@@ -33,7 +33,7 @@
     </div>
 
 
-    <form class="form-horizontal" data-validate="true" data-validate-remote="true" novalidate action="{{ route('shows.store') }}" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('shows.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         @include('operator.shows._form')

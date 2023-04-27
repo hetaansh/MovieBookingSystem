@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('seats', function (Blueprint $table) {
+        Schema::create('booking_records', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('screen_id');
-            $table->foreign('screen_id')
-                ->references('id')->on('screens')->onDelete('cascade');
             $table->string('name');
-            $table->unsignedTinyInteger('row_id');
-            $table->unsignedTinyInteger('col_id');
-            $table->boolean('selected')->default(0);
+            $table->integer('amount');
+            $table->string('cinema');
+            $table->string('movie');
+            $table->string('screen');
+            $table->string('show');
+            $table->string('seat_array');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seats');
+        Schema::dropIfExists('booking_records');
     }
 };

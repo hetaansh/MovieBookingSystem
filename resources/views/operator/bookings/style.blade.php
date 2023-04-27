@@ -53,4 +53,10 @@
         scroll-behavior: auto|smooth|initial|inherit;
     }
 
+    label.error {
+        color: #dc3545;
+        font-size: 14px;
+    }
+
+
 </style>

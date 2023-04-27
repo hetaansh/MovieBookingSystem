@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
 use App\Models\City;
 use App\Models\State;
@@ -29,7 +30,10 @@ class CityController extends Controller
 
     public function dataTable()
     {
-        return Datatables::of(City::with('state'))->make(true);
+        $query = DB::table('cities')
+            ->join('states', 'cities.state_id', '=', 'states.id')
+            ->select('cities.id as cities_id', 'cities.name as cities_name', 'states.name as states_name')->get();
+        return Datatables::of($query)->make(true);
     }
 
     /**

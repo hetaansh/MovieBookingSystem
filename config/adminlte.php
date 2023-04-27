@@ -370,18 +370,11 @@ return [
             'active' => ['operator/shows*']
         ],
         [
-            'text'    => 'Seats',
-            'icon'    => 'fa fa-window-restore',
-            'can'     => 'isOperator',
-            'url'  => 'operator/seats',
-            'active' => ['operator/seats*']
-        ],
-        [
             'text'    => 'Booking',
             'icon'    => 'fa fa-list-alt',
             'can'     => 'isOperator',
             'url'  => 'operator/bookings',
-            'active' => ['operator/tickets*']
+            'active' => ['operator/bookings*']
         ],
     ],
 

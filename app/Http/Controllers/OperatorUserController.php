@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Operator;
 use Illuminate\Http\Request;
 use App\Models\OperatorUser;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 use Yajra\DataTables\Facades\DataTables;
@@ -29,7 +31,11 @@ class OperatorUserController extends Controller
 
     public function dataTable()
     {
-        return Datatables::of(OperatorUser::with('operator'))->make(true);
+        $query = DB::table('operator_users')
+            ->join('operators', 'operator_users.operator_id', '=', 'operators.id')
+            ->select('operator_users.id as operator_users_id', 'operator_users.name as operator_users_name', 'operator_users.email as operator_users_email', 'operators.name as operators_name')->get();
+
+        return Datatables::of($query)->make(true);
     }
 
     /**

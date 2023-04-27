@@ -77,7 +77,7 @@ class ScreenController extends Controller
 //
 //        for ($row = 1; $row <= $rows; $row++) {
 //            for ($col = 1; $col <= $cols; $col++) {
-//                Auth::user()->operator->seats()->create([
+//                Auth::user()->operator->bookings()->create([
 //                    'name' => $letter . ' ' . $col,
 //                    'row_id' => $row,
 //                    'col_id' => $col,

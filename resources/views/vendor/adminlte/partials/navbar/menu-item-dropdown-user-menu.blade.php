@@ -76,13 +76,13 @@
             <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif" href="{{ url('admin/passwords/' . Auth::id(). '/edit') }}">
             @endauth
             @auth('operator')
-            <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif" href="{{ url('operator/password/' . Auth::id(). '/edit') }}">
+            <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif" href="{{ url('operator/passwords/' . Auth::id(). '/edit') }}">
             @endauth
             <i class="fas fa-fw fa-lock "></i>
                 Password
             </a>
 
-            
+
             <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa fa-fw fa-power-off text-red"></i>
                 {{ __('adminlte::adminlte.log_out') }}

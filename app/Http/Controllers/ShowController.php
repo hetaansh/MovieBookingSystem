@@ -36,6 +36,9 @@ class ShowController extends Controller
 
     public function dataTable()
     {
+
+        Show::where('end_at', '<', Carbon::now())->delete();
+
         $query = DB::table('shows')
             ->join('screens', 'shows.screen_id', '=', 'screens.id')
             ->join('cinemas', 'screens.cinema_id', '=', 'cinemas.id')
@@ -130,10 +133,8 @@ class ShowController extends Controller
         );
 
 
-
         $cinema = Auth::user()->operator->cinemas()->findOrFail($request->cinema_id);
         $screen = $cinema->screens()->findOrFail($request->screen_id);
-
 
 
         $start_at = $validated['start_at'];

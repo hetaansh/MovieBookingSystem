@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('operator/password/' . Auth::id(). '/edit') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('operator/passwords/' . Auth::id(). '/edit') }}">Home</a></li>
                         <li class="breadcrumb-item active">{{ $title }}</li>
                     </ol>
                 </div>
@@ -39,8 +39,8 @@
     <div class="card-header">
         <h3 class="card-title">Update Password</h3>
     </div>
-    
-    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('password.update', Auth::id()) }}" method="POST" enctype="multipart/form-data">
+
+    <form class="form-horizontal" data-validate="true" novalidate action="{{ route('passwords.update', Auth::id()) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -48,12 +48,12 @@
 
     <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="submit" class="btn btn-default float-right"><a href="{{ url('admin/dashboard') }}">Cancel</a></button>
+            <button type="submit" class="btn btn-default float-right"><a href="{{ url('operator/dashboard') }}">Cancel</a></button>
         </div>
 
     </form>
 
-    
+
 </body>
 
 

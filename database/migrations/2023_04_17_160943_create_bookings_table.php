@@ -27,7 +27,7 @@ return new class extends Migration {
                 ->references('id')->on('screens');
             $table->unsignedInteger('show_id');
             $table->foreign('show_id')
-                ->references('id')->on('shows');
+                ->references('id')->on('shows')->onDelete('cascade');
             $table->string('seat_array');
             $table->timestamps();
         });

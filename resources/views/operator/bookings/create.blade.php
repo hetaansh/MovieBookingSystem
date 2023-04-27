@@ -1,20 +1,27 @@
 @extends('adminlte::page')
 
-@section('title', 'Add Booking')
-
-
-
+@section('title', 'Seats')
 
 @section('content')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
 
+    <head>
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        @include('operator.bookings.style')
+    </head>
+
+    <body>
 
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-
+                    <h1>{{ $title }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -27,110 +34,50 @@
         </div>
     </section>
 
-    <div class="card card-info">
-        <div class="card-header">
-            <h3 class="card-title">Add Booking</h3>
-        </div>
 
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header" style="color: white;
+                                background-color: #17a2b8 ;
+                                border-bottom: 1px solid rgba(0,0,0,.125);
+                                padding: .75rem 1.25rem;
+                                position: relative;
+                                border-top-left-radius: .25rem;
+                                border-top-right-radius: .25rem;">
+                            <h3 class=" card-title
+                            ">Add Booking</h3>
+                        </div>
+                        <div class="card-body">
 
-        <form class="form-horizontal" data-validate="true" data-validate-remote="true" novalidate action="{{ route('bookings.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+                            @include('operator.bookings.form')
 
-            @include('operator.bookings._form')
-
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <a class="btn btn-default float-right" href="{{route('bookings.index')}}">Cancel</a>
+                        </div>
+                    </div>
+                    @include('operator.bookings.seat-menu')
+                </div>
             </div>
+        </div>
+    </section>
+    </body>
 
-        </form>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @include('operator.bookings.jquery')
+
+@stop
+
+@section('css')
+
+    <link href="{{ asset('/datatable/css/dataTables.bulma.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('/datatable/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+
 @stop
 
 @section('js')
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>
-
-    @include('super_admin.__jquery_validations')
-
-    <script>
-        $(document).ready(function() {
-            $('#cinema_id').change(function() {
-                let cinema_id = $(this).val();
-                if (cinema_id != '') {
-                    $.ajax({
-                        url: 'getScreen',
-                        type: 'post',
-                        data: 'cinema_id=' + cinema_id + '&_token={{csrf_token()}}',
-                        success: function(result) {
-                            $('#screen_id').html('<option value="">-- Select Screen --</option>');
-                            $.each(result, function(key, value) {
-                                $("#screen_id").append('<option value="' + value
-                                    .id + '">' + value.name + '</option>');
-                            });
-
-                        }
-                    });
-                } else {
-                    $('#screen_id').html('<option value="">-- Select Cinema --</option>');
-                }
-            });
-
-            $('#movie_id').change(function() {
-                let movie_id = $(this).val();
-                    let screen_id = $('#screen_id').val();
-                console.log(screen_id);
-                if (movie_id != '') {
-                    $.ajax({
-                        url: 'getMovie',
-                        type: 'post',
-                        data: 'movie_id=' + movie_id + '&_token={{csrf_token()}}',
-                        success: function(result) {
-                            $('#duration').val(result.duration);
-                            $('#release_at').val(result.release_at);
-                            $('#start_at').datetimepicker('minDate', moment(result.release_at));
-                        }
-                    });
-                }
-            });
-
-            // $('#start_at').change(function() {
-            //     let start_at = $(this).val();
-            //     if (start_at != '') {
-            //         $.ajax({
-            //             url: "isShowAvailable",
-            //             type: "post",
-            //             data: 'start_at=' + start_at + '&end_at=' + end_at + '&_token={{csrf_token()}}',
-            //             success: function(result) {
-            //                 console.log('hello');
-            //             }
-            //         });
-            //     }
-            // });
-
-
-
-
-
-
-
-            $('#start_at').on('change.datetimepicker', function(e) {
-                $('#end_at').datetimepicker('date', moment(e.date).add($('#duration').val(), 'minutes'));
-            });
-
-            $('#cinema_id').change();
-
-            $('#end_at').datetimepicker({
-                format: 'YYYY-MM-DD HH:mm:ss',
-                readonly: true
-            });
-
-            $('#start_at').datetimepicker({
-                format: 'YYYY-MM-DD HH:mm:ss',
-                stepping: 15
-            });
-
-
-        });
-    </script>
+    <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
 @stop
